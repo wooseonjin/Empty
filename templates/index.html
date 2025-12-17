@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비움(Empty): 흔적 없는 고민 상담소</title>
+    <style>
+        /* 기본 테마: 차분하고 어두운 다크모드 */
+        body {
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            font-family: 'Pretendard', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 { font-weight: 300; letter-spacing: 5px; color: #a2a8d3; }
+        p { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+
+        /* 입력창 스타일 */
+        #content {
+            width: 100%;
+            height: 200px;
+            background: transparent;
+            border: 1px solid #334257;
+            border-radius: 10px;
+            color: white;
+            padding: 20px;
+            font-size: 1.1rem;
+            resize: none;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        #content:focus { border: 1px solid #a2a8d3; }
+
+        /* 비우기 버튼 */
+        .btn-empty {
+            margin-top: 20px;
+            padding: 12px 40px;
+            background: transparent;
+            border: 1px solid #a2a8d3;
+            color: #a2a8d3;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .btn-empty:hover {
+            background: #a2a8d3;
+            color: #1a1a2e;
+        }
+
+        /* 글자가 사라지는 애니메이션 효과 */
+        .burning {
+            animation: burnAway 2s forwards;
+            pointer-events: none;
+        }
+
+        @keyframes burnAway {
+            0% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+            50% { opacity: 0.5; filter: blur(2px); }
+            100% { opacity: 0; transform: scale(1.2) translateY(-50px); filter: blur(10px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>EMPTY</h1>
+    <p>흔적 없는 고민 상담소: 당신의 마음을 비워내세요</p>
+    
+    <textarea id="content" placeholder="이곳에 누구에게도 말 못 할 고민을 적어보세요..."></textarea>
+    <br>
+    <button class="btn-empty" onclick="processBurn()">비워내기</button>
+</div>
+
+<script>
+    async function processBurn() {
+        const contentArea = document.getElementById('content');
+        const text = contentArea.value;
+
+        if (!text.trim()) {
+            alert("비워낼 고민이 없습니다.");
+            return;
+        }
+
+        // 1. 서버에 저장 요청 (ID를 받아옴)
+        const formData = new FormData();
+        formData.append('content', text);
+
+        const response = await fetch('/burn', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            const msgId = data.id;
+
+            // 2. 화면 애니메이션 시작
+            contentArea.classList.add('burning');
+
+            // 3. 애니메이션이 끝날 때쯤 서버에서 삭제
+            setTimeout(async () => {
+                await fetch(`/delete/${msgId}`, { method: 'DELETE' });
+                
+                // 초기 상태로 복구
+                contentArea.value = "";
+                contentArea.classList.remove('burning');
+                alert("당신의 고민이 흔적 없이 비워졌습니다.");
+            }, 2000);
+        }
+    }
+</script>
+
+</body>
+</html>
