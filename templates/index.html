@@ -29,7 +29,7 @@
             padding-bottom: 50px;
         }
 
-        /* [상단 배너] PC 가로폭 맞춤 */
+        /* [상단 배너] */
         .hero-section {
             width: 92%; height: 200px;
             background: linear-gradient(135deg, #a89685 0%, #8d7b68 100%);
@@ -67,7 +67,7 @@
         .temp-bar-bg { width: 100%; height: 7px; background: #f2f2f2; border-radius: 10px; margin-top: 10px; overflow: hidden; }
         .temp-bar-fill { height: 100%; background: var(--accent); transition: width 1.5s ease; }
 
-        /* [입력 카드] 고민이 사라지고 응원이 뜨는 영역 */
+        /* [입력 카드] */
         .input-card { 
             width: 92%; background: white; padding: 40px 30px; border-radius: 35px; 
             box-shadow: 0 8px 20px rgba(0,0,0,0.03);
@@ -77,7 +77,6 @@
 
         .input-view { width: 100%; display: flex; flex-direction: column; align-items: center; transition: 0.5s; }
         
-        /* [응원 메시지 뷰] 처음엔 숨김 */
         .quote-view { 
             display: none; flex-direction: column; align-items: center; text-align: center;
             animation: fadeIn 1.2s ease forwards;
@@ -94,6 +93,7 @@
             padding: 10px 25px; border-radius: 30px; cursor: pointer; font-size: 0.9rem;
         }
 
+        /* [수정] 이모티콘 선택 영역 */
         .emotion-selector { margin-bottom: 25px; display: flex; gap: 15px; }
         .emotion-btn { cursor: pointer; font-size: 2.5rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
         .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
@@ -110,10 +110,7 @@
             font-size: 1.4rem; font-weight: 700; border-radius: 50px; cursor: pointer;
         }
 
-        /* 사라지는 애니메이션 */
         .burning { transform: scale(0.95); opacity: 0; filter: blur(15px); transition: 1s ease; }
-
-        .footer-cheer { margin-top: 15px; font-size: 0.9rem; color: #bcab9a; }
     </style>
 </head>
 <body>
@@ -141,10 +138,10 @@
     <div class="input-card">
         <div class="input-view" id="input-view">
             <div class="emotion-selector">
-                <span class="emotion-btn active" onclick="selectEmotion(this, '😶')">😶</span>
-                <span class="emotion-btn" onclick="selectEmotion(this, '😢')">😢</span>
+                <span class="emotion-btn active" onclick="selectEmotion(this, '😐')">😐</span>
+                <span class="emotion-btn" onclick="selectEmotion(this, '😰')">😰</span>
                 <span class="emotion-btn" onclick="selectEmotion(this, '😡')">😡</span>
-                <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
+                <span class="emotion-btn" onclick="selectEmotion(this, '😮‍💨')">😮‍💨</span>
                 <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
             </div>
             <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요..."></textarea>
@@ -156,28 +153,28 @@
             <button class="btn-retry" onclick="resetView()">다른 고민 비우기</button>
         </div>
     </div>
-
-    <div class="footer-cheer">잠시 마음을 내려놓아도 괜찮아요.</div>
-</div>
+    </div>
 
 <script>
-    let selectedEmotion = '😶';
+    let selectedEmotion = '😐'; // 기본값 변경
     window.onload = fetchInfo;
 
     async function fetchInfo() {
-        const res = await fetch('/info');
-        const data = await res.json();
-        document.getElementById('total-val').innerText = data.total;
-        const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
-        document.getElementById('temp-text').innerText = tempVal;
-        document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
-        
-        let level = "1단계";
-        if(data.total > 100) level = "마스터";
-        else if(data.total > 50) level = "4단계";
-        else if(data.total > 20) level = "3단계";
-        else if(data.total > 5) level = "2단계";
-        document.getElementById('rank-level').innerText = level;
+        try {
+            const res = await fetch('/info');
+            const data = await res.json();
+            document.getElementById('total-val').innerText = data.total;
+            const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
+            document.getElementById('temp-text').innerText = tempVal;
+            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
+            
+            let level = "1단계";
+            if(data.total > 100) level = "마스터";
+            else if(data.total > 50) level = "4단계";
+            else if(data.total > 20) level = "3단계";
+            else if(data.total > 5) level = "2단계";
+            document.getElementById('rank-level').innerText = level;
+        } catch(e) {}
     }
 
     function selectEmotion(el, emo) {
@@ -190,26 +187,27 @@
         const content = document.getElementById('content');
         if (!content.value.trim()) return;
 
-        // 1. 입력창 애니메이션 시작
         document.getElementById('input-view').classList.add('burning');
         
-        const res = await fetch('/burn', { 
-            method: 'POST', 
-            body: new URLSearchParams({'content': content.value, 'emotion': selectedEmotion}) 
-        });
-        const data = await res.json();
+        try {
+            const res = await fetch('/burn', { 
+                method: 'POST', 
+                body: new URLSearchParams({'content': content.value, 'emotion': selectedEmotion}) 
+            });
+            const data = await res.json();
 
-        // 2. 1초 뒤에 응원 메시지로 전환
-        setTimeout(() => {
-            document.getElementById('input-view').style.display = 'none';
-            document.getElementById('quote-view').style.display = 'flex';
-            document.getElementById('quote-text').innerText = data.quote;
-            fetchInfo();
-        }, 1000);
+            setTimeout(() => {
+                document.getElementById('input-view').style.display = 'none';
+                document.getElementById('quote-view').style.display = 'flex';
+                document.getElementById('quote-text').innerText = data.quote;
+                fetchInfo();
+            }, 1000);
+        } catch(e) {
+            document.getElementById('input-view').classList.remove('burning');
+        }
     }
 
     function resetView() {
-        // 다시 입력창으로 돌아가기
         document.getElementById('content').value = "";
         document.getElementById('input-view').classList.remove('burning');
         document.getElementById('input-view').style.display = 'flex';
