@@ -3,129 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>비움(Empty): 흔적 없는 고민 상담소</title>
+    <title>비움 (Empty)</title>
+    <link href="https://hangeul.naver.com/2017-nanum?family=NanumSquareRound" rel="stylesheet">
     <style>
-        /* 기본 테마: 차분하고 어두운 다크모드 */
-        body {
-            background-color: #1a1a2e;
-            color: #e0e0e0;
-            font-family: 'Pretendard', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
+        :root { --bg: #f8f5f0; --point: #a4907c; --text: #5d564e; }
+        body { background: var(--bg); color: var(--text); font-family: 'NanumSquareRound', sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 40px 20px; }
+        .container { width: 100%; max-width: 450px; text-align: center; position: relative; }
+        
+        /* BGM 버튼 */
+        .bgm-ctrl { position: absolute; top: -20px; right: 0; cursor: pointer; font-size: 1.5rem; background: none; border: none; }
 
-        .container {
-            text-align: center;
-            width: 90%;
-            max-width: 600px;
-        }
+        h1 { font-weight: 800; color: var(--point); margin-bottom: 5px; }
+        .total-count { font-size: 0.8rem; color: #bcab9a; margin-bottom: 25px; }
+        
+        /* 감정 선택 */
+        .emotion-selector { margin-bottom: 15px; display: flex; justify-content: center; gap: 10px; }
+        .emotion-btn { cursor: pointer; font-size: 1.2rem; border: 2px solid transparent; border-radius: 50%; padding: 5px; transition: 0.3s; }
+        .emotion-btn.active { border-color: var(--point); background: white; }
 
-        h1 { font-weight: 300; letter-spacing: 5px; color: #a2a8d3; }
-        p { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+        #content { width: 100%; height: 160px; background: white; border: 2px solid #efe9de; border-radius: 25px; padding: 20px; font-size: 1rem; outline: none; box-sizing: border-box; transition: 0.3s; }
+        #content:focus { border-color: var(--point); }
 
-        /* 입력창 스타일 */
-        #content {
-            width: 100%;
-            height: 200px;
-            background: transparent;
-            border: 1px solid #334257;
-            border-radius: 10px;
-            color: white;
-            padding: 20px;
-            font-size: 1.1rem;
-            resize: none;
-            outline: none;
-            transition: border 0.3s;
-        }
+        .btn-empty { margin-top: 20px; padding: 15px 60px; background: var(--point); color: white; border: none; font-size: 1.1rem; font-weight: bold; border-radius: 50px; cursor: pointer; transition: 0.3s; }
+        
+        /* 위로 명언 팝업 */
+        #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(248, 245, 240, 0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; text-align: center; }
+        #quote-text { font-size: 1.3rem; font-weight: bold; color: var(--point); padding: 20px; }
 
-        #content:focus { border: 1px solid #a2a8d3; }
-
-        /* 비우기 버튼 */
-        .btn-empty {
-            margin-top: 20px;
-            padding: 12px 40px;
-            background: transparent;
-            border: 1px solid #a2a8d3;
-            color: #a2a8d3;
-            cursor: pointer;
-            font-size: 1rem;
-            border-radius: 50px;
-            transition: all 0.3s;
-        }
-
-        .btn-empty:hover {
-            background: #a2a8d3;
-            color: #1a1a2e;
-        }
-
-        /* 글자가 사라지는 애니메이션 효과 */
-        .burning {
-            animation: burnAway 2s forwards;
-            pointer-events: none;
-        }
-
-        @keyframes burnAway {
-            0% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-            50% { opacity: 0.5; filter: blur(2px); }
-            100% { opacity: 0; transform: scale(1.2) translateY(-50px); filter: blur(10px); }
-        }
+        .history-section { margin-top: 40px; width: 100%; max-width: 450px; }
+        .message-item { background: white; padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--point); animation: slide 0.5s ease; }
+        @keyframes slide { from { opacity: 0; transform: translateY(10px); } }
+        .burning { animation: burn 1.5s forwards; }
+        @keyframes burn { to { opacity: 0; transform: scale(0.9) translateY(-20px); filter: blur(10px); } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>EMPTY</h1>
-    <p>흔적 없는 고민 상담소: 당신의 마음을 비워내세요</p>
+    <button class="bgm-ctrl" onclick="toggleBGM()">🎵</button>
+    <h1>비움</h1>
+    <div class="total-count">지금까지 <span id="total-val">0</span>개의 마음이 비워졌습니다.</div>
     
-    <textarea id="content" placeholder="이곳에 누구에게도 말 못 할 고민을 적어보세요..."></textarea>
-    <br>
-    <button class="btn-empty" onclick="processBurn()">비워내기</button>
+    <div class="emotion-selector">
+        <span class="emotion-btn active" onclick="selectEmotion(this, '😶')">😶</span>
+        <span class="emotion-btn" onclick="selectEmotion(this, '😢')">😢</span>
+        <span class="emotion-btn" onclick="selectEmotion(this, '😡')">😡</span>
+        <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
+        <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
+    </div>
+
+    <textarea id="content" placeholder="당신의 마음을 적어주세요..."></textarea>
+    <button class="btn-empty" onclick="processBurn()">마음 비우기</button>
 </div>
 
+<div class="history-section">
+    <div id="history-list"></div>
+</div>
+
+<div id="quote-overlay">
+    <div id="quote-text"></div>
+    <p style="font-size:0.8rem; color:#aaa;">(잠시 후 사라집니다)</p>
+</div>
+
+<audio id="bgm" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3"></audio>
+
 <script>
+    let selectedEmotion = '😶';
+    window.onload = fetchInfo;
+
+    function selectEmotion(el, emo) {
+        document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        selectedEmotion = emo;
+    }
+
+    function toggleBGM() {
+        const audio = document.getElementById('bgm');
+        audio.paused ? audio.play() : audio.pause();
+    }
+
+    async function fetchInfo() {
+        const res = await fetch('/info');
+        const data = await res.json();
+        document.getElementById('total-val').innerText = data.total;
+        const list = document.getElementById('history-list');
+        list.innerHTML = data.messages.map(msg => `
+            <div class="message-item">
+                <span style="font-size:1.2rem">${msg.emotion}</span> 
+                <span style="margin-left:5px;">${msg.content}</span>
+                <div style="font-size:0.7rem; color:#ccc; margin-top:5px;">${msg.date}</div>
+            </div>
+        `).join('');
+    }
+
     async function processBurn() {
         const contentArea = document.getElementById('content');
-        const text = contentArea.value;
+        if (!contentArea.value.trim()) return;
 
-        if (!text.trim()) {
-            alert("비워낼 고민이 없습니다.");
-            return;
-        }
-
-        // 1. 서버에 저장 요청 (ID를 받아옴)
         const formData = new FormData();
-        formData.append('content', text);
+        formData.append('content', contentArea.value);
+        formData.append('emotion', selectedEmotion);
 
-        const response = await fetch('/burn', {
-            method: 'POST',
-            body: formData
-        });
-
-        const data = await response.json();
+        const res = await fetch('/burn', { method: 'POST', body: formData });
+        const data = await res.json();
 
         if (data.status === 'success') {
-            const msgId = data.id;
-
-            // 2. 화면 애니메이션 시작
             contentArea.classList.add('burning');
-
-            // 3. 애니메이션이 끝날 때쯤 서버에서 삭제
             setTimeout(async () => {
-                await fetch(`/delete/${msgId}`, { method: 'DELETE' });
+                // 서버에서 삭제
+                await fetch(`/delete/${data.id}`, { method: 'DELETE' });
                 
-                // 초기 상태로 복구
-                contentArea.value = "";
-                contentArea.classList.remove('burning');
-                alert("당신의 고민이 흔적 없이 비워졌습니다.");
-            }, 2000);
+                // 명언 팝업
+                const overlay = document.getElementById('quote-overlay');
+                document.getElementById('quote-text').innerText = data.quote;
+                overlay.style.display = 'flex';
+                
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    contentArea.value = "";
+                    contentArea.classList.remove('burning');
+                    fetchInfo();
+                }, 3000);
+            }, 1500);
         }
     }
 </script>
-
 </body>
 </html>
