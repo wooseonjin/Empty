@@ -4,20 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>흔적없는 고민 상담소 | EMPTY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 폰트 불러오기 방식 보완 */
-        @font-face {
-            font-family: 'Cafe24Ssurround';
-            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105@1.1/Cafe24Ssurround.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-
         :root { --main-brown: #8d7b68; --soft-beige: #f3eee3; --accent: #e9967a; }
 
-        /* 모든 요소에 폰트 강제 적용 */
+        /* 모든 요소에 폰트를 강제로 입히는 설정입니다 */
         * {
-            font-family: 'Cafe24Ssurround', sans-serif !important;
+            font-family: 'Gaegu', cursive !important;
+            word-break: keep-all;
         }
 
         body { 
@@ -25,51 +19,55 @@
             color: #5d564e; 
             display: flex; flex-direction: column; align-items: center; 
             margin: 0; padding: 40px 20px; min-height: 100vh;
-            word-break: keep-all;
         }
 
-        /* 모바일 최적화 컴팩트 사이즈 */
+        /* 모바일 최적화 아담한 사이즈 */
         .container { width: 95%; max-width: 400px; text-align: center; }
 
-        .main-title { font-size: 2.2rem; font-weight: 700; color: var(--main-brown); margin: 0; line-height: 1.2; }
-        .sub-title { font-size: 1.1rem; color: #bcab9a; margin-bottom: 25px; letter-spacing: 5px; }
-        .total-count { font-size: 1rem; color: var(--main-brown); margin-bottom: 15px; opacity: 0.8; }
+        .main-title { font-size: 3rem; font-weight: 700; color: var(--main-brown); margin: 0; line-height: 1.1; }
+        .sub-title { font-size: 1.5rem; color: #bcab9a; margin-bottom: 25px; letter-spacing: 5px; }
 
+        .total-count { font-size: 1.2rem; color: var(--main-brown); margin-bottom: 15px; opacity: 0.8; }
+
+        /* 입력창 카드 - 아담하고 동글게 */
         .input-card { 
-            background: rgba(255, 255, 255, 0.75); padding: 30px 20px; border-radius: 30px; 
+            background: rgba(255, 255, 255, 0.75); padding: 30px 20px; border-radius: 35px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); backdrop-filter: blur(10px); margin-bottom: 25px;
         }
 
         .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; }
-        .emotion-btn { cursor: pointer; font-size: 1.8rem; filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
+        .emotion-btn { cursor: pointer; font-size: 2.2rem; filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
         .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.15); }
 
         #content { 
-            width: 100%; height: 140px; border: none; background: transparent;
-            font-size: 1.2rem; outline: none; resize: none; text-align: center;
-            line-height: 1.6; color: #5d564e;
+            width: 100%; height: 150px; border: none; background: transparent;
+            font-size: 1.6rem; outline: none; resize: none; text-align: center;
+            line-height: 1.4; color: #5d564e; font-weight: 700;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: #fff; border: none; 
-            padding: 12px 40px; font-size: 1.3rem;
+            padding: 12px 50px; font-size: 1.8rem; font-weight: 700;
             border-radius: 50px; cursor: pointer; transition: 0.3s; 
             box-shadow: 0 5px 15px rgba(141, 123, 104, 0.2);
         }
         .btn-empty:hover { transform: scale(1.03); background: #766352; }
 
+        /* 대시보드 - 컴팩트 디자인 */
         .dashboard {
             display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px;
             margin-top: 30px; padding: 15px 10px; background: rgba(255,255,255,0.4); border-radius: 20px;
         }
         .stat-card { text-align: center; }
-        .stat-emoji { font-size: 1.4rem; display: block; margin-bottom: 3px; }
-        .stat-num { font-size: 0.9rem; color: var(--main-brown); font-weight: bold; }
+        .stat-emoji { font-size: 1.6rem; display: block; margin-bottom: 3px; }
+        .stat-num { font-size: 1.2rem; color: var(--main-brown); font-weight: bold; }
 
+        /* 마음 온도 게이지 */
         .temp-section { margin-top: 25px; width: 100%; }
-        .temp-bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.05); border-radius: 10px; margin-top: 8px; overflow: hidden; }
+        .temp-bar-bg { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; margin-top: 8px; overflow: hidden; }
         .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1s ease-in-out; }
 
+        /* 결과 화면 오버레이 */
         #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 238, 227, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 30px; }
         .burning { animation: vanish 1.5s forwards; }
         @keyframes vanish { to { opacity: 0; transform: scale(0.8) translateY(-20px); filter: blur(10px); } }
@@ -105,8 +103,8 @@
     </div>
 
     <div class="temp-section">
-        <div style="display:flex; justify-content: space-between; font-size: 1.1rem;">
-            <span>우리의 마음 온도</span>
+        <div style="display:flex; justify-content: space-between; font-size: 1.3rem;">
+            <span>오늘의 마음 온도</span>
             <span><span id="temp-text">36.5</span>°C</span>
         </div>
         <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
@@ -114,7 +112,8 @@
 </div>
 
 <div id="quote-overlay">
-    <div id="quote-text" style="font-size: 1.8rem; color: var(--main-brown); text-align: center; line-height: 1.5;"></div>
+    <div id="quote-text" style="font-size: 2.5rem; color: var(--main-brown); text-align: center; line-height: 1.4;"></div>
+    <div style="margin-top:20px; font-size: 1.5rem; opacity: 0.6;">당신의 내일은 오늘보다 더 맑을 거예요.</div>
 </div>
 
 <script>
