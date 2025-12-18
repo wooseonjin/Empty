@@ -7,67 +7,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --main-brown: #8d7b68; --soft-beige: #f3eee3; }
-
         body { 
-            /* 그라데이션 배경 유지 */
             background: linear-gradient(135deg, #f5f5dc 0%, #e7dec8 100%);
-            color: #5d564e;
-            font-family: 'Gaegu', cursive; /* 부드러운 폰트 유지 */
+            color: #5d564e; font-family: 'Gaegu', cursive; 
             display: flex; flex-direction: column; align-items: center; 
             margin: 0; padding: 60px 20px; min-height: 100vh;
         }
-        
         .container { width: 100%; max-width: 500px; text-align: center; }
-        
-        /* 제목 구성 유지: 상담소가 크게, EMPTY가 부제목 */
         .main-title { font-size: 3.5rem; font-weight: 700; color: var(--main-brown); margin: 0; line-height: 1.2; }
         .sub-title { font-size: 1.8rem; color: #bcab9a; margin-bottom: 30px; letter-spacing: 5px; }
-        
         .total-count { font-size: 1.1rem; color: var(--main-brown); margin-bottom: 20px; opacity: 0.8; }
-
         .input-card { 
-            background: rgba(255, 255, 255, 0.7); 
-            padding: 30px; border-radius: 40px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05); 
-            backdrop-filter: blur(10px); margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.7); padding: 30px; border-radius: 40px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05); backdrop-filter: blur(10px); margin-bottom: 30px;
         }
-        
         .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 12px; }
         .emotion-btn { cursor: pointer; font-size: 1.8rem; filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
         .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.2); }
-
         #content { 
             width: 100%; height: 160px; border: none; background: transparent;
             font-family: 'Gaegu', cursive; font-size: 1.4rem; outline: none; resize: none; text-align: center;
         }
-        
         .btn-empty { 
             background: var(--main-brown); color: #fff; border: none; 
             padding: 15px 70px; font-size: 1.6rem; font-family: 'Gaegu', cursive;
             border-radius: 50px; cursor: pointer; transition: 0.3s; 
             box-shadow: 0 8px 15px rgba(141, 123, 104, 0.3);
         }
-        .btn-empty:hover { transform: scale(1.05); background: #766352; }
-
-        .history-section { margin-top: 40px; width: 100%; }
-        .message-item { 
-            background: rgba(255,255,255,0.4); padding: 15px; border-radius: 20px; 
-            margin-bottom: 12px; display: flex; align-items: center; gap: 15px;
-            font-size: 1.2rem;
-        }
-
-        #quote-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(243, 238, 227, 0.98); display: none; 
-            flex-direction: column; align-items: center; justify-content: center; z-index: 1000; 
-        }
+        .message-item { background: rgba(255,255,255,0.4); padding: 15px; border-radius: 20px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; font-size: 1.2rem; }
+        #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 238, 227, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
         .burning { animation: vanish 1.5s forwards; }
         @keyframes vanish { to { opacity: 0; transform: scale(0.8) translateY(-20px); filter: blur(10px); } }
-
-        .bgm-btn { position: fixed; bottom: 20px; left: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        .bgm-btn { position: fixed; bottom: 20px; left: 20px; background: white; border: none; width: 45px; height: 45px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 1.2rem; cursor: pointer; }
     </style>
 </head>
-<body onclick="setupAudio()">
+<body onclick="playBGM()">
 
 <div class="container">
     <div class="total-count">지금까지 <span id="total-val">0</span>번의 마음을 비웠어요</div>
@@ -86,38 +60,46 @@
     </div>
     
     <button class="btn-empty" id="burn-btn" onclick="processBurn()">비워내기</button>
-
-    <div class="history-section" id="history-list">
-        </div>
+    <div class="history-section" id="history-list" style="margin-top: 40px;"></div>
 </div>
 
 <div id="quote-overlay">
-    <div id="quote-text" style="font-size: 2.5rem; color: var(--main-brown);"></div>
+    <div id="quote-text" style="font-size: 2.5rem; color: var(--main-brown); text-align: center;"></div>
     <div style="margin-top:20px; font-size: 1.2rem;">마음이 조금은 가벼워졌길..</div>
 </div>
 
 <button class="bgm-btn" onclick="toggleBGM(event)">🎵</button>
-<audio id="bgm" loop src="https://www.chosic.com/wp-content/uploads/2021/04/Rain-and-Light-Sleep-Piano.mp3"></audio>
+
+<audio id="bgm" loop preload="auto">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+</audio>
 
 <script>
     let selectedEmotion = '😶';
-    let isAudioInitialized = false;
+    let isPlaying = false;
 
     window.onload = fetchInfo;
 
-    // 브라우저 자동재생 정책 대응
-    function setupAudio() {
-        if (!isAudioInitialized) {
-            const audio = document.getElementById('bgm');
-            audio.play().catch(() => {});
-            isAudioInitialized = true;
+    // 화면 아무데나 클릭하면 음악 재생 시작
+    function playBGM() {
+        const audio = document.getElementById('bgm');
+        if (!isPlaying) {
+            audio.play().then(() => {
+                isPlaying = true;
+            }).catch(e => console.log("자동 재생 대기 중..."));
         }
     }
 
     function toggleBGM(e) {
         e.stopPropagation();
-        const a = document.getElementById('bgm');
-        a.paused ? a.play() : a.pause();
+        const audio = document.getElementById('bgm');
+        if (audio.paused) {
+            audio.play();
+            isPlaying = true;
+        } else {
+            audio.pause();
+            isPlaying = false;
+        }
     }
 
     function selectEmotion(el, emo) {
@@ -133,19 +115,15 @@
             document.getElementById('total-val').innerText = data.total;
             const list = document.getElementById('history-list');
             list.innerHTML = data.messages.map(msg => `
-                <div class="message-item">
-                    <span>${msg.emotion}</span>
-                    <span>${msg.content}</span>
-                </div>
+                <div class="message-item"><span>${msg.emotion}</span> <span>${msg.content}</span></div>
             `).join('');
-        } catch(e) { console.error("데이터 로드 실패"); }
+        } catch(e) {}
     }
 
     async function processBurn() {
         const area = document.getElementById('content');
         const btn = document.getElementById('burn-btn');
         const text = area.value.trim();
-
         if (!text) return;
 
         btn.disabled = true;
@@ -156,17 +134,13 @@
         try {
             const res = await fetch('/burn', { method: 'POST', body: fd });
             const data = await res.json();
-
             area.classList.add('burning');
             setTimeout(async () => {
                 await fetch(`/delete/${data.id}`, { method: 'DELETE' });
-                
-                const overlay = document.getElementById('quote-overlay');
                 document.getElementById('quote-text').innerText = data.quote;
-                overlay.style.display = 'flex';
-                
+                document.getElementById('quote-overlay').style.display = 'flex';
                 setTimeout(() => {
-                    overlay.style.display = 'none';
+                    document.getElementById('quote-overlay').style.display = 'none';
                     area.value = "";
                     area.classList.remove('burning');
                     btn.disabled = false;
@@ -174,7 +148,7 @@
                 }, 2500);
             }, 1200);
         } catch(e) {
-            alert("연결이 원활하지 않습니다.");
+            alert("오류가 발생했습니다.");
             btn.disabled = false;
         }
     }
