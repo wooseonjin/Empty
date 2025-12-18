@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>흔적없는 고민 상담소 | EMPTY</title>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -11,6 +11,7 @@
             --soft-beige: #f9f7f2; 
             --dark-beige: #f2ede4;
             --accent: #e9967a;
+            --line-color: #eee;
         }
 
         * {
@@ -25,111 +26,111 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* [상단 내비게이션 바] */
+        /* [상단 내비게이션] */
         .top-nav {
-            width: 100%; height: 70px; background: white;
+            width: 100%; height: 60px; background: white;
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
             position: sticky; top: 0; z-index: 1000;
         }
         .nav-container {
-            width: 90%; max-width: 1100px;
+            width: 90%; max-width: 1000px;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .nav-logo { font-weight: 700; font-size: 1.2rem; color: var(--main-brown); cursor: pointer; }
-        .nav-menu { display: flex; gap: 40px; }
+        .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--main-brown); cursor: pointer; letter-spacing: 1px; }
+        .nav-menu { display: flex; gap: 25px; }
         .nav-item { 
-            font-size: 1rem; color: #bcab9a; cursor: pointer; font-weight: 400;
-            transition: 0.3s; position: relative; padding: 5px 0;
+            font-size: 0.9rem; color: #bcab9a; cursor: pointer; transition: 0.3s; padding: 5px 0;
         }
-        .nav-item.active { color: var(--main-brown); font-weight: 700; }
-        .nav-item.active::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
-            background: var(--main-brown);
-        }
+        .nav-item.active { color: var(--main-brown); font-weight: 700; border-bottom: 2px solid var(--main-brown); }
 
-        /* [메인 컨테이너] 가로로 넓게 설정 */
+        /* [메인 래퍼] */
         .main-wrapper {
-            width: 90%; max-width: 1100px; display: flex; flex-direction: column; 
-            gap: 30px; padding: 40px 0;
+            width: 92%; max-width: 1000px; display: flex; flex-direction: column; 
+            gap: 20px; padding: 30px 0;
         }
 
-        /* [상단 배너] 가로로 긴 형태 */
+        /* [상단 배너] */
         .hero-section {
-            width: 100%; height: 240px;
+            width: 100%; padding: 40px 20px;
             background: linear-gradient(135deg, #a89685 0%, #8d7b68 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; border-radius: 40px;
-            box-shadow: 0 10px 25px rgba(141, 123, 104, 0.15);
+            color: white; text-align: center; border-radius: 30px;
+            box-shadow: 0 8px 20px rgba(141, 123, 104, 0.1);
         }
-        .main-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; }
-        .sub-title { font-size: 0.9rem; letter-spacing: 8px; opacity: 0.8; }
+        .main-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+        .sub-title { font-size: 0.8rem; letter-spacing: 6px; opacity: 0.8; }
 
         /* [섹션 공통] */
-        .content-section { display: none; width: 100%; flex-direction: column; gap: 25px; animation: fadeIn 0.6s ease; }
+        .content-section { display: none; width: 100%; flex-direction: column; gap: 20px; animation: fadeIn 0.5s ease; }
         .content-section.active { display: flex; }
 
         /* [카드 공통] */
-        .card { background: white; border-radius: 40px; box-shadow: 0 8px 20px rgba(0,0,0,0.03); }
+        .card { background: white; border-radius: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
 
-        /* [고민 비우기 섹션] */
-        .burn-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 25px; }
+        /* [고민 비우기 섹션 레이아웃] */
+        .burn-layout { display: grid; grid-template-columns: 1fr 2.2fr; gap: 20px; }
         
-        .info-card { padding: 40px 30px; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
-        .info-item { text-align: center; }
-        .info-label { font-size: 0.9rem; color: #bcab9a; margin-bottom: 10px; }
-        .info-value { font-size: 1.8rem; font-weight: 700; color: var(--main-brown); }
-        .temp-bar-bg { width: 100%; height: 8px; background: #f2f2f2; border-radius: 10px; margin-top: 15px; overflow: hidden; }
+        /* 정보 카드 & 구분선 */
+        .info-card { padding: 30px 20px; display: flex; flex-direction: column; justify-content: center; gap: 25px; }
+        .info-item { text-align: center; width: 100%; }
+        .info-divider { width: 40%; height: 1px; background: var(--line-color); margin: 5px auto; } /* PC용 세로 배치시 가로선 */
+        .info-label { font-size: 0.8rem; color: #bcab9a; margin-bottom: 8px; }
+        .info-value { font-size: 1.5rem; font-weight: 700; color: var(--main-brown); }
+        .temp-bar-bg { width: 80%; height: 6px; background: #f2f2f2; border-radius: 10px; margin: 12px auto 0; overflow: hidden; }
         .temp-bar-fill { height: 100%; background: var(--accent); transition: width 1.5s ease; }
 
-        .input-card { padding: 60px 40px; min-height: 450px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-        .emotion-selector { margin-bottom: 35px; display: flex; gap: 20px; }
-        .emotion-btn { cursor: pointer; font-size: 2.8rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
+        /* 입력 카드 */
+        .input-card { padding: 50px 30px; min-height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .emotion-selector { margin-bottom: 30px; display: flex; gap: 15px; }
+        .emotion-btn { cursor: pointer; font-size: 2.2rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
         .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
         
         #content { 
-            width: 100%; height: 160px; border: none; background: transparent; 
-            font-size: 1.3rem; outline: none; resize: none; text-align: center; line-height: 1.8; color: #5d564e;
+            width: 100%; height: 140px; border: none; background: transparent; 
+            font-size: 1.1rem; outline: none; resize: none; text-align: center; line-height: 1.7; color: #5d564e;
         }
         .btn-empty { 
-            background: var(--main-brown); color: white; border: none; padding: 20px 0; 
-            width: 100%; max-width: 300px; font-size: 1.4rem; font-weight: 700; border-radius: 60px; cursor: pointer; margin-top: 30px;
+            background: var(--main-brown); color: white; border: none; padding: 16px 0; 
+            width: 100%; max-width: 250px; font-size: 1.2rem; font-weight: 700; border-radius: 50px; cursor: pointer; margin-top: 25px;
         }
 
-        /* [온기 나누기 섹션] 베이지 톤 통일 */
+        /* [온기 나누기 섹션] */
         .warmth-layout { display: flex; flex-direction: column; gap: 20px; align-items: center; }
-        .warmth-input-card { 
-            width: 100%; padding: 40px; background: var(--dark-beige); border: none;
-            display: flex; flex-direction: column; align-items: center;
-        }
+        .warmth-input-card { width: 100%; padding: 30px; background: var(--dark-beige); display: flex; flex-direction: column; align-items: center; }
         #warmth-msg { 
-            width: 100%; max-width: 700px; height: 100px; border: 1px solid #e2ddd3; 
-            background: white; border-radius: 25px; padding: 20px; font-size: 1.1rem; outline: none; resize: none; margin-bottom: 20px;
+            width: 100%; max-width: 600px; height: 90px; border: 1px solid #e2ddd3; 
+            background: white; border-radius: 20px; padding: 15px; font-size: 1rem; outline: none; resize: none; margin-bottom: 15px;
         }
-        .btn-share { background: var(--main-brown); color: white; border: none; padding: 15px 40px; border-radius: 40px; font-size: 1.1rem; font-weight: 700; cursor: pointer; }
+        .btn-share { background: var(--main-brown); color: white; border: none; padding: 12px 35px; border-radius: 30px; font-size: 1rem; font-weight: 700; cursor: pointer; }
         
-        .warmth-list { width: 100%; max-width: 800px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .warmth-card { 
-            background: white; padding: 25px; border-radius: 30px; 
-            border: 1px solid var(--dark-beige); transition: 0.3s;
-        }
-        .warmth-card:hover { transform: translateY(-5px); border-color: var(--main-brown); }
-        .warmth-text { font-size: 1.05rem; line-height: 1.6; color: #5d564e; }
-        .warmth-date { font-size: 0.8rem; color: #bcab9a; margin-top: 15px; display: block; }
+        .warmth-list { width: 100%; max-width: 800px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .warmth-card { background: white; padding: 20px; border-radius: 25px; border: 1px solid var(--dark-beige); }
+        .warmth-text { font-size: 0.95rem; line-height: 1.6; color: #5d564e; }
+        .warmth-date { font-size: 0.75rem; color: #bcab9a; margin-top: 12px; display: block; }
 
-        /* 결과 창 애니메이션 */
-        #quote-view { width: 100%; text-align: center; animation: fadeIn 1s ease; }
-        .quote-text { font-size: 1.5rem; line-height: 1.8; color: var(--main-brown); margin-bottom: 40px; word-break: keep-all; }
+        /* 결과 창 */
+        .quote-text { font-size: 1.3rem; line-height: 1.7; color: var(--main-brown); margin-bottom: 30px; word-break: keep-all; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .burning { transform: scale(0.98); opacity: 0; filter: blur(20px); transition: 0.8s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .burning { transform: scale(0.98); opacity: 0; filter: blur(15px); transition: 0.8s ease; }
 
-        /* 모바일 대응 */
+        /* [모바일 최적화 미디어 쿼리] */
         @media (max-width: 768px) {
             .burn-layout { grid-template-columns: 1fr; }
+            .info-card { flex-direction: row; padding: 20px; gap: 0; }
+            .info-divider { width: 1px; height: 30px; margin: 0 10px; } /* 모바일 가로 배치시 세로선 */
+            .info-value { font-size: 1.2rem; }
+            .info-label { font-size: 0.7rem; }
+            .temp-bar-bg { width: 90%; }
+            
+            .main-title { font-size: 1.5rem; }
+            .input-card { padding: 40px 20px; min-height: 350px; }
+            #content { font-size: 1rem; }
+            .emotion-btn { font-size: 1.8rem; }
+            
             .warmth-list { grid-template-columns: 1fr; }
-            .nav-menu { gap: 20px; }
-            .main-title { font-size: 1.8rem; }
+            .warmth-input-card { padding: 20px; }
         }
     </style>
 </head>
@@ -158,6 +159,7 @@
                     <p class="info-label">비워낸 마음의 기록</p>
                     <p class="info-value"><span id="total-val">0</span> 개</p>
                 </div>
+                <div class="info-divider"></div>
                 <div class="info-item">
                     <p class="info-label">우리의 따뜻한 온도</p>
                     <p class="info-value"><span id="temp-text">36.5</span>°C</p>
@@ -174,12 +176,12 @@
                         <span class="emotion-btn" onclick="selectEmotion(this, '😱')">😱</span>
                         <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
                     </div>
-                    <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요..."></textarea>
+                    <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요."></textarea>
                     <button class="btn-empty" onclick="processBurn()">마음 비워내기</button>
                 </div>
-                <div id="quote-view" style="display:none;">
+                <div id="quote-view" style="display:none; text-align: center;">
                     <p id="quote-text" class="quote-text"></p>
-                    <button onclick="resetView()" style="background:none; border:1px solid #ddd; padding:12px 30px; border-radius:30px; color:#bcab9a; cursor:pointer;">다른 고민 비우기</button>
+                    <button onclick="resetView()" style="background:none; border:1px solid #ddd; padding:10px 25px; border-radius:30px; color:#bcab9a; cursor:pointer; font-size:0.85rem;">다른 고민 비우기</button>
                 </div>
             </section>
         </div>
@@ -188,7 +190,7 @@
     <main id="section-warmth" class="content-section">
         <div class="warmth-layout">
             <div class="card warmth-input-card">
-                <textarea id="warmth-msg" placeholder="누군가에게 힘이 될 한마디를 남겨주세요..."></textarea>
+                <textarea id="warmth-msg" placeholder="누군가에게 힘이 될 한마디를 남겨주세요."></textarea>
                 <button class="btn-share" onclick="shareWarmth()">온기 나누기</button>
             </div>
 
@@ -209,7 +211,6 @@
 <script>
     let selectedEmotion = '😐';
 
-    // 탭 전환 로직
     function switchTab(section, el) {
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
