@@ -10,71 +10,58 @@
 
         body { 
             background: linear-gradient(135deg, #f5f5dc 0%, #e7dec8 100%);
-            color: #5d564e; 
-            font-family: 'NanumJungHagSaeng', cursive; /* 둥글둥글 도톰한 손글씨 */
+            color: #5d564e; font-family: 'NanumJungHagSaeng', cursive; 
             display: flex; flex-direction: column; align-items: center; 
-            margin: 0; padding: 40px 20px; min-height: 100vh;
-            word-break: keep-all;
+            margin: 0; padding: 30px 20px; min-height: 100vh; /* 패딩 축소 */
         }
 
-        /* 1. 크기를 다시 시원하게 키움 (모바일/PC 모두 꽉 차 보이게) */
-        .container { width: 100%; max-width: 680px; text-align: center; }
+        /* 전체 컨테이너 크기를 대폭 줄임 (모바일에서도 여유 있게) */
+        .container { width: 90%; max-width: 420px; text-align: center; }
 
-        .main-title { font-size: 4.5rem; font-weight: 700; color: var(--main-brown); margin: 0; line-height: 1; }
-        .sub-title { font-size: 2.2rem; color: #bcab9a; margin-bottom: 30px; letter-spacing: 12px; }
+        .main-title { font-size: 3rem; font-weight: 700; color: var(--main-brown); margin: 0; }
+        .sub-title { font-size: 1.5rem; color: #bcab9a; margin-bottom: 20px; letter-spacing: 6px; }
 
-        .total-count { font-size: 1.6rem; color: var(--main-brown); margin-bottom: 25px; }
+        .total-count { font-size: 1.2rem; color: var(--main-brown); margin-bottom: 15px; }
 
-        /* 2. 입력창 크기 확대 */
+        /* 입력창 카드 사이즈 축소 */
         .input-card { 
-            background: rgba(255, 255, 255, 0.75); padding: 45px 30px; border-radius: 50px; 
-            box-shadow: 0 20px 45px rgba(0,0,0,0.06); backdrop-filter: blur(10px); margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.75); padding: 25px 20px; border-radius: 35px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); backdrop-filter: blur(10px); margin-bottom: 25px;
         }
 
-        .emotion-selector { margin-bottom: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .emotion-btn { cursor: pointer; font-size: 2.8rem; filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
-        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.2); }
+        .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; }
+        .emotion-btn { cursor: pointer; font-size: 2.2rem; filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
+        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
 
         #content { 
-            width: 100%; height: 240px; border: none; background: transparent;
-            font-family: 'NanumJungHagSaeng', cursive; font-size: 2.2rem; outline: none; resize: none; text-align: center;
-            line-height: 1.5; color: #5d564e;
+            width: 100%; height: 150px; border: none; background: transparent;
+            font-family: 'NanumJungHagSaeng', cursive; font-size: 1.6rem; outline: none; resize: none; text-align: center;
+            line-height: 1.3; color: #5d564e;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: #fff; border: none; 
-            padding: 18px 90px; font-size: 2.2rem; font-family: 'NanumJungHagSaeng', cursive;
-            border-radius: 60px; cursor: pointer; transition: 0.3s; 
-            box-shadow: 0 10px 20px rgba(141, 123, 104, 0.3);
+            padding: 12px 50px; font-size: 1.6rem; font-family: 'NanumJungHagSaeng', cursive;
+            border-radius: 40px; cursor: pointer; transition: 0.3s; 
         }
-        .btn-empty:hover { transform: scale(1.05); background: #766352; }
 
-        /* 3. 대시보드 구성 (모바일 대응) */
+        /* 5가지 감정 대시보드 사이즈 축소 */
         .dashboard {
-            display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
-            margin-top: 45px; padding: 25px 15px; background: rgba(255,255,255,0.4); border-radius: 30px;
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px;
+            margin-top: 30px; padding: 15px 10px; background: rgba(255,255,255,0.4); border-radius: 20px;
         }
         .stat-card { text-align: center; }
-        .stat-emoji { font-size: 2.2rem; display: block; margin-bottom: 5px; }
-        .stat-num { font-size: 1.5rem; color: var(--main-brown); font-weight: bold; }
+        .stat-emoji { font-size: 1.6rem; display: block; }
+        .stat-num { font-size: 1.1rem; color: var(--main-brown); font-weight: bold; }
 
-        /* 마음 온도 게이지 */
-        .temp-section { margin-top: 40px; width: 100%; padding-bottom: 40px; }
-        .temp-bar-bg { width: 100%; height: 15px; background: rgba(0,0,0,0.05); border-radius: 15px; margin-top: 12px; overflow: hidden; }
-        .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1.2s ease-in-out; }
+        /* 마음 온도 게이지 슬림하게 */
+        .temp-section { margin-top: 25px; width: 100%; }
+        .temp-bar-bg { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; margin-top: 8px; overflow: hidden; }
+        .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1s ease-in-out; }
 
-        /* 애니메이션 및 오버레이 */
-        .burning { animation: vanish 1.5s forwards; }
-        @keyframes vanish { to { opacity: 0; transform: scale(0.8) translateY(-30px); filter: blur(15px); } }
         #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 238, 227, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-
-        /* 모바일 환경에서 폰트 크기 미세 조정 */
-        @media (max-width: 480px) {
-            .main-title { font-size: 3.5rem; }
-            .sub-title { font-size: 1.8rem; letter-spacing: 6px; }
-            #content { font-size: 1.8rem; height: 200px; }
-            .btn-empty { padding: 15px 60px; font-size: 1.8rem; }
-        }
+        .burning { animation: vanish 1.5s forwards; }
+        @keyframes vanish { to { opacity: 0; transform: scale(0.8) translateY(-20px); filter: blur(10px); } }
     </style>
 </head>
 <body>
@@ -83,7 +70,7 @@
     <h1 class="main-title">흔적없는 고민 상담소</h1>
     <div class="sub-title">EMPTY</div>
     
-    <div class="total-count">오늘까지 비워낸 마음 : <span id="total-val">0</span>개</div>
+    <div class="total-count">비워낸 마음 : <span id="total-val">0</span>개</div>
 
     <div class="input-card">
         <div class="emotion-selector">
@@ -93,7 +80,7 @@
             <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
             <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
         </div>
-        <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 적어주세요..."></textarea>
+        <textarea id="content" placeholder="버리고 싶은 마음을 적어보세요..."></textarea>
     </div>
     
     <button class="btn-empty" id="burn-btn" onclick="processBurn()">비워내기</button>
@@ -107,8 +94,8 @@
     </div>
 
     <div class="temp-section">
-        <div style="display:flex; justify-content: space-between; font-size: 1.6rem;">
-            <span>우리의 마음 온도</span>
+        <div style="display:flex; justify-content: space-between; font-size: 1.2rem;">
+            <span>마음 온도</span>
             <span><span id="temp-text">36.5</span>°C</span>
         </div>
         <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
@@ -116,8 +103,7 @@
 </div>
 
 <div id="quote-overlay">
-    <div id="quote-text" style="font-size: 3.5rem; color: var(--main-brown); text-align: center; line-height: 1.3;"></div>
-    <div style="margin-top:20px; font-size: 1.8rem; opacity: 0.7;">당신의 내일은 오늘보다 행복하길.</div>
+    <div id="quote-text" style="font-size: 2.5rem; color: var(--main-brown); text-align: center;"></div>
 </div>
 
 <script>
@@ -137,10 +123,8 @@
             document.getElementById('total-val').innerText = data.total;
 
             const stats = [
-                Math.ceil(data.total * 0.3), 
-                Math.ceil(data.total * 0.2), 
-                Math.ceil(data.total * 0.15), 
-                Math.ceil(data.total * 0.1), 
+                Math.ceil(data.total * 0.3), Math.ceil(data.total * 0.2), 
+                Math.ceil(data.total * 0.15), Math.ceil(data.total * 0.1), 
                 Math.ceil(data.total * 0.25)
             ];
             stats.forEach((num, i) => {
@@ -167,7 +151,6 @@
         try {
             const res = await fetch('/burn', { method: 'POST', body: fd });
             const data = await res.json();
-
             area.classList.add('burning');
             setTimeout(async () => {
                 await fetch(`/delete/${data.id}`, { method: 'DELETE' });
@@ -179,10 +162,9 @@
                     area.classList.remove('burning');
                     btn.disabled = false;
                     fetchInfo();
-                }, 3000);
-            }, 1200);
+                }, 2500);
+            }, 1000);
         } catch(e) {
-            alert("연결이 원활하지 않습니다.");
             btn.disabled = false;
         }
     }
