@@ -12,6 +12,7 @@
             --accent: #e9967a;
         }
 
+        /* 전역 폰트 및 스타일 */
         * {
             font-family: 'Gowun Dodum', sans-serif !important;
             box-sizing: border-box; margin: 0; padding: 0;
@@ -22,55 +23,31 @@
             background-color: var(--soft-beige);
             color: #5d564e; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
         }
 
-        /* [수정] PC에서는 넓게, 모바일에서는 92% 유지 */
         .main-wrapper {
-            width: 100%; /* 기본적으로 전체를 사용하되 내부에서 조절 */
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            width: 100%;
+            display: flex; flex-direction: column; gap: 20px; align-items: center;
+            padding-bottom: 50px;
         }
 
-        /* [상단 배너] PC에서 가득 차게 보이도록 설정 */
+        /* [상단 배너] */
         .hero-section {
-            width: 92%; /* 모바일 여백 유지 */
-            max-width: 100%; 
-            height: 220px;
+            width: 92%; height: 200px;
             background: linear-gradient(135deg, #a89685 0%, #8d7b68 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center;
-            border-radius: 35px;
-            position: relative; 
-            box-shadow: 0 10px 25px rgba(141, 123, 104, 0.15);
-            margin-top: 20px; /* 상단 여백 추가 */
+            border-radius: 35px; position: relative; 
+            margin-top: 20px; box-shadow: 0 10px 25px rgba(141, 123, 104, 0.15);
         }
 
-        /* [PC 화면 대응] 가로폭을 넓혀주는 핵심 코드 */
+        /* [PC 대응] 중간 카드들도 배너와 같은 폭으로 확장 */
         @media (min-width: 768px) {
-            .hero-section {
-                width: 98%; /* PC에서는 화면 끝에 가깝게 넓힘 */
-                max-width: 1200px; /* 너무 과하게 커지는 것 방지 */
-                height: 280px;
+            .hero-section, .info-card, .input-card {
+                width: 95% !important; max-width: 1000px !important;
             }
-            .content-wrapper {
-                width: 98% !important;
-                max-width: 1200px !important;
-                display: grid !important; /* PC에서는 카드들을 병렬 배치 가능 */
-                grid-template-columns: 1fr 1fr; 
-                gap: 20px;
-            }
-            .input-card { grid-column: span 2; } /* 입력창은 넓게 유지 */
-        }
-
-        /* 카드들이 담기는 영역 */
-        .content-wrapper {
-            width: 92%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 40px;
+            .hero-section { height: 260px; }
         }
 
         .rank-tag {
@@ -79,53 +56,58 @@
             border-radius: 15px; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .main-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 5px; }
-        .sub-title { font-size: 1rem; letter-spacing: 8px; opacity: 0.8; }
+        .main-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; }
+        .sub-title { font-size: 0.9rem; letter-spacing: 8px; opacity: 0.8; margin-top: 5px; }
 
+        /* [정보 카드] */
         .info-card {
-            width: 100%; background: white; padding: 25px; border-radius: 28px;
+            width: 92%; background: white; padding: 25px; border-radius: 28px;
             display: flex; justify-content: space-around; align-items: center;
             box-shadow: 0 8px 20px rgba(0,0,0,0.03);
         }
         .info-item { text-align: center; flex: 1; }
         .info-label { font-size: 0.9rem; color: #bcab9a; margin-bottom: 8px; }
-        
-        .info-value { 
-            font-size: 1.6rem; font-weight: 700; color: var(--main-brown);
-            font-family: 'Gowun Dodum' !important;
-        }
-        .info-value span { color: var(--accent); font-family: 'Gowun Dodum' !important; }
+        .info-value { font-size: 1.6rem; font-weight: 700; color: var(--main-brown); }
+        .info-value span { color: var(--accent); }
 
         .v-line { width: 1px; height: 35px; background: #f0f0f0; }
-
         .temp-bar-bg { width: 100%; height: 7px; background: #f2f2f2; border-radius: 10px; margin-top: 10px; overflow: hidden; }
         .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1.5s ease; }
 
+        /* [입력 카드] */
         .input-card { 
-            width: 100%; background: white; padding: 35px; border-radius: 35px; 
+            width: 92%; background: white; padding: 35px; border-radius: 35px; 
             box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             display: flex; flex-direction: column; align-items: center;
+            transition: all 0.5s ease;
         }
 
-        .emotion-selector { margin-bottom: 25px; display: flex; justify-content: center; gap: 20px; }
+        .emotion-selector { margin-bottom: 25px; display: flex; gap: clamp(10px, 3vw, 20px); }
         .emotion-btn { cursor: pointer; font-size: 2.5rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
         .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
+
+        /* [애니메이션] 고민이 사라질 때의 효과 */
+        .burning {
+            transform: scale(0.9) translateY(-20px);
+            opacity: 0;
+            filter: blur(10px);
+        }
 
         #content { 
             width: 100%; height: 160px; border: none; background: transparent;
             font-size: 1.2rem; outline: none; resize: none; text-align: center;
-            line-height: 1.8; color: #5d564e;
+            line-height: 1.8; color: #5d564e; transition: all 0.8s ease;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: white; border: none; 
-            margin-top: 20px; padding: 18px 0; width: 100%; max-width: 300px; /* 버튼 너무 커짐 방지 */
-            font-size: 1.4rem; font-weight: 700;
-            border-radius: 50px; cursor: pointer; transition: 0.2s;
+            margin-top: 20px; padding: 18px 0; width: 100%; max-width: 320px;
+            font-size: 1.4rem; font-weight: 700; border-radius: 50px; 
+            cursor: pointer; transition: 0.2s;
         }
-        .btn-empty:active { transform: scale(0.98); opacity: 0.9; }
+        .btn-empty:active { transform: scale(0.95); }
 
-        .footer-cheer { margin-top: 10px; font-size: 0.9rem; color: #bcab9a; text-align: center; }
+        .footer-cheer { margin-top: 10px; font-size: 0.9rem; color: #bcab9a; }
     </style>
 </head>
 <body>
@@ -137,69 +119,88 @@
         <div class="sub-title">EMPTY</div>
     </div>
 
-    <div class="content-wrapper">
-        <div class="info-card">
-            <div class="info-item">
-                <div class="info-label">비워낸 마음</div>
-                <div class="info-value"><span id="total-val">0</span> 개</div>
-            </div>
-            <div class="v-line"></div>
-            <div class="info-item">
-                <div class="info-label">마음의 온도</div>
-                <div class="info-value"><span id="temp-text">36.5</span>°C</div>
-                <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
-            </div>
+    <div class="info-card">
+        <div class="info-item">
+            <div class="info-label">비워낸 마음</div>
+            <div class="info-value"><span id="total-val">0</span> 개</div>
         </div>
-
-        <div class="input-card">
-            <div class="emotion-selector">
-                <span class="emotion-btn active" onclick="selectEmotion(this, '😶')">😶</span>
-                <span class="emotion-btn" onclick="selectEmotion(this, '😢')">😢</span>
-                <span class="emotion-btn" onclick="selectEmotion(this, '😡')">😡</span>
-                <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
-                <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
-            </div>
-            <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요..."></textarea>
-            <button class="btn-empty" onclick="processBurn()">마음 비워내기</button>
+        <div class="v-line"></div>
+        <div class="info-item">
+            <div class="info-label">마음의 온도</div>
+            <div class="info-value"><span id="temp-text">36.5</span>°C</div>
+            <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
         </div>
     </div>
 
-    <div id="cheer-msg" class="footer-cheer">오늘 하루도 고생 많았어요.</div>
+    <div class="input-card" id="card-area">
+        <div class="emotion-selector">
+            <span class="emotion-btn active" onclick="selectEmotion(this, '😶')">😶</span>
+            <span class="emotion-btn" onclick="selectEmotion(this, '😢')">😢</span>
+            <span class="emotion-btn" onclick="selectEmotion(this, '😡')">😡</span>
+            <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
+            <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
+        </div>
+        <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요..."></textarea>
+        <button class="btn-empty" onclick="processBurn()">마음 비워내기</button>
+    </div>
+
+    <div class="footer-cheer">잠시 마음을 내려놓아도 괜찮아요.</div>
 </div>
 
 <script>
-    /* 기존 스크립트 그대로 유지 */
     let selectedEmotion = '😶';
     window.onload = fetchInfo;
+
     async function fetchInfo() {
         try {
             const res = await fetch('/info');
             const data = await res.json();
             document.getElementById('total-val').innerText = data.total;
+            const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
+            document.getElementById('temp-text').innerText = tempVal;
+            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
+            
             let level = "1단계";
             if(data.total > 100) level = "마스터";
             else if(data.total > 50) level = "4단계";
             else if(data.total > 20) level = "3단계";
             else if(data.total > 5) level = "2단계";
             document.getElementById('rank-level').innerText = level;
-            const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
-            document.getElementById('temp-text').innerText = tempVal;
-            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
-        } catch(e) {}
+        } catch(e) { console.error("데이터 로딩 실패"); }
     }
+
     function selectEmotion(el, emo) {
         document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
         el.classList.add('active');
         selectedEmotion = emo;
     }
+
     async function processBurn() {
         const area = document.getElementById('content');
         if (!area.value.trim()) return;
+
+        // 1. 사라지는 애니메이션 적용
+        area.classList.add('burning');
+        
         try {
-            await fetch('/burn', { method: 'POST', body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) });
-            area.value = "";
-            fetchInfo();
-        } catch(e) {}
+            const res = await fetch('/burn', { 
+                method: 'POST', 
+                body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) 
+            });
+            const data = await res.json();
+
+            // 2. 애니메이션 완료 후 실행 (0.8초 후)
+            setTimeout(() => {
+                alert(data.quote); // 응원 메시지 띄우기
+                area.value = "";
+                area.classList.remove('burning');
+                fetchInfo(); // 정보 갱신
+            }, 800);
+
+        } catch(e) {
+            alert("마음을 비우는 데 실패했어요. 다시 시도해 주세요.");
+            area.classList.remove('burning');
+        }
     }
 </script>
 </body>
