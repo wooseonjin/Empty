@@ -10,10 +10,9 @@
             --main-brown: #8d7b68; 
             --soft-beige: #f9f7f2; 
             --accent: #e9967a;
-            --white: #ffffff;
         }
 
-        /* [핵심] 모든 요소에 폰트 강제 적용 */
+        /* [핵심] 모든 숫자와 문자에 폰트 강제 고정 */
         * {
             font-family: 'Gowun Dodum', sans-serif !important;
             box-sizing: border-box; margin: 0; padding: 0;
@@ -24,74 +23,78 @@
             background-color: var(--soft-beige);
             color: #5d564e; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            overflow-x: hidden;
+            padding: 20px 0; /* 전체적으로 위아래 여백 추가 */
         }
 
-        /* [상단 배너] 이미지처럼 곡선을 더 깊게 */
+        /* [상단 배너] 이미지처럼 양옆 여백을 주고 공중에 띄움 */
         .hero-section {
-            width: 100%; height: 240px;
+            width: 92%; max-width: 500px; height: 200px;
             background: linear-gradient(135deg, #a89685 0%, #8d7b68 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center;
-            border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
-            position: relative; padding-bottom: 30px;
+            border-radius: 30px; /* 사방을 둥글게 해서 공중에 뜬 느낌 */
+            position: relative; 
+            box-shadow: 0 10px 20px rgba(141, 123, 104, 0.2);
         }
 
         .rank-tag {
-            position: absolute; top: 55px; right: 20px;
-            background: rgba(255,255,255,0.25); padding: 5px 12px;
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.2); padding: 5px 12px;
             border-radius: 15px; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .main-title { font-size: 2.1rem; font-weight: 700; margin-bottom: 5px; }
-        .sub-title { font-size: 0.8rem; letter-spacing: 10px; opacity: 0.8; }
+        .main-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; }
+        .sub-title { font-size: 0.8rem; letter-spacing: 8px; opacity: 0.8; }
 
-        /* [컨텐츠 영역] 가로 폭을 88%로 제한해서 여백 확보 */
+        /* [컨텐츠 영역] */
         .content-wrapper {
-            width: 88%; max-width: 450px;
-            margin-top: -45px; 
+            width: 92%; max-width: 500px;
+            margin-top: 20px; /* 배너와 떨어뜨려 여유 있게 배치 */
             display: flex; flex-direction: column; gap: 15px;
-            padding-bottom: 40px;
         }
 
-        /* [정보 카드] 폰트 크기와 가독성 개선 */
+        /* [정보 카드] 폰트 문제 해결 */
         .info-card {
-            background: var(--white); padding: 20px; border-radius: 25px;
+            background: white; padding: 20px; border-radius: 25px;
             display: flex; justify-content: space-around; align-items: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
         }
         .info-item { text-align: center; flex: 1; }
-        .info-label { font-size: 0.8rem; color: #bcab9a; margin-bottom: 6px; font-weight: 400; }
-        .info-value { font-size: 1.4rem; font-weight: 700; color: var(--main-brown); }
-        .info-value span { color: var(--accent); }
+        .info-label { font-size: 0.8rem; color: #bcab9a; margin-bottom: 8px; }
+        
+        /* 숫자 부분 폰트 강제 적용 */
+        .info-value { 
+            font-size: 1.5rem; font-weight: 700; color: var(--main-brown);
+            display: block; 
+        }
+        .info-value span { color: var(--accent); font-family: 'Gowun Dodum' !important; }
 
-        .v-line { width: 1px; height: 35px; background: #eee; }
+        .v-line { width: 1px; height: 30px; background: #eee; }
 
-        /* [온도 바] */
-        .temp-bar-bg { width: 100%; height: 7px; background: #f0f0f0; border-radius: 10px; margin-top: 10px; overflow: hidden; }
+        .temp-bar-bg { width: 100%; height: 6px; background: #f0f0f0; border-radius: 10px; margin-top: 10px; overflow: hidden; }
         .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1.5s ease; }
 
         /* [입력 카드] */
         .input-card { 
-            background: var(--white); padding: 25px; border-radius: 30px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            background: white; padding: 25px; border-radius: 30px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
             display: flex; flex-direction: column; align-items: center;
         }
 
-        .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 15px; }
-        .emotion-btn { cursor: pointer; font-size: 2.2rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
-        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
+        .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 12px; }
+        .emotion-btn { cursor: pointer; font-size: 2rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
+        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.15); }
 
         #content { 
-            width: 100%; height: 150px; border: none; background: transparent;
+            width: 100%; height: 120px; border: none; background: transparent;
             font-size: 1.1rem; outline: none; resize: none; text-align: center;
-            line-height: 1.6; color: #5d564e; font-weight: 400;
+            line-height: 1.6; color: #5d564e;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: white; border: none; 
             margin-top: 15px; padding: 14px 0; width: 100%; font-size: 1.3rem; font-weight: 700;
-            border-radius: 50px; cursor: pointer;
+            border-radius: 40px; cursor: pointer;
         }
 
         .footer-cheer {
@@ -133,55 +136,39 @@
         <button class="btn-empty" onclick="processBurn()">마음 비워내기</button>
     </div>
 
-    <div id="cheer-msg" class="footer-cheer">오늘도 참 잘해왔어요.</div>
+    <div id="cheer-msg" class="footer-cheer">잠시 마음을 내려놓아도 괜찮아요.</div>
 </div>
 
 <script>
+    // ... 기존 스크립트와 동일 (생략)
     let selectedEmotion = '😶';
-    
-    // 페이지 로드 시 정보 업데이트
-    window.onload = fetchInfo;
-
     async function fetchInfo() {
-        try {
-            const res = await fetch('/info');
-            const data = await res.json();
-            document.getElementById('total-val').innerText = data.total;
-            
-            // 등급 계산
-            let level = "1단계";
-            if(data.total > 100) level = "마스터";
-            else if(data.total > 50) level = "4단계";
-            else if(data.total > 20) level = "3단계";
-            else if(data.total > 5) level = "2단계";
-            document.getElementById('rank-level').innerText = level;
-
-            const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
-            document.getElementById('temp-text').innerText = tempVal;
-            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
-        } catch(e) {}
+        const res = await fetch('/info');
+        const data = await res.json();
+        document.getElementById('total-val').innerText = data.total;
+        const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
+        document.getElementById('temp-text').innerText = tempVal;
+        document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
+        
+        let level = "1단계";
+        if(data.total > 100) level = "마스터";
+        else if(data.total > 50) level = "4단계";
+        else if(data.total > 20) level = "3단계";
+        else if(data.total > 5) level = "2단계";
+        document.getElementById('rank-level').innerText = level;
     }
-
+    window.onload = fetchInfo;
     function selectEmotion(el, emo) {
         document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
         el.classList.add('active');
         selectedEmotion = emo;
     }
-
     async function processBurn() {
         const area = document.getElementById('content');
         if (!area.value.trim()) return;
-        
-        try {
-            const res = await fetch('/burn', { 
-                method: 'POST', 
-                body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) 
-            });
-            const data = await res.json();
-            alert(data.quote); // 결과 한마디 출력
-            area.value = "";
-            fetchInfo(); // 횟수 및 온도 갱신
-        } catch(e) {}
+        const res = await fetch('/burn', { method: 'POST', body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) });
+        area.value = "";
+        fetchInfo();
     }
 </script>
 </body>
