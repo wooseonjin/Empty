@@ -12,6 +12,7 @@
             --accent: #e9967a;
         }
 
+        /* 기본 설정 */
         * {
             font-family: 'Gowun Dodum', sans-serif !important;
             box-sizing: border-box; margin: 0; padding: 0;
@@ -22,95 +23,97 @@
             background-color: var(--soft-beige);
             color: #5d564e; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
+            padding: 20px 0;
         }
 
         .main-wrapper {
-            width: 100%; display: flex; flex-direction: column; gap: 20px; align-items: center;
-            padding-bottom: 50px;
+            width: 100%; display: flex; flex-direction: column; gap: 15px; align-items: center;
+            max-width: 500px; /* 모바일 폭 기준 */
         }
 
-        /* [상단 배너] */
+        /* [상단 배너] 이미지처럼 큼직하고 둥글게 */
         .hero-section {
-            width: 92%; height: 200px;
+            width: 92%; height: 220px;
             background: linear-gradient(135deg, #a89685 0%, #8d7b68 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; border-radius: 35px; position: relative; 
-            margin-top: 20px; box-shadow: 0 10px 25px rgba(141, 123, 104, 0.15);
-        }
-
-        @media (min-width: 768px) {
-            .hero-section, .info-card, .input-card { width: 95% !important; max-width: 1000px !important; }
-            .hero-section { height: 260px; }
+            color: white; text-align: center; border-radius: 45px; position: relative; 
+            box-shadow: 0 10px 25px rgba(141, 123, 104, 0.15);
         }
 
         .rank-tag {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(255,255,255,0.2); padding: 5px 12px;
-            border-radius: 15px; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.3);
+            position: absolute; top: 25px; right: 25px;
+            background: rgba(255,255,255,0.25); padding: 6px 14px;
+            border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(4px);
         }
 
-        .main-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; }
-        .sub-title { font-size: 0.9rem; letter-spacing: 8px; opacity: 0.8; margin-top: 5px; }
+        .main-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+        .sub-title { font-size: 0.85rem; letter-spacing: 6px; opacity: 0.8; }
 
-        /* [정보 카드] */
+        /* [정보 카드] 이미지와 동일한 2분할 구조 */
         .info-card {
-            width: 92%; background: white; padding: 25px; border-radius: 28px;
+            width: 92%; background: white; padding: 25px 15px; border-radius: 40px;
             display: flex; justify-content: space-around; align-items: center;
             box-shadow: 0 8px 20px rgba(0,0,0,0.03);
         }
         .info-item { text-align: center; flex: 1; }
-        .info-label { font-size: 0.9rem; color: #bcab9a; margin-bottom: 8px; }
-        .info-value { font-size: 1.6rem; font-weight: 700; color: var(--main-brown); }
+        .info-label { font-size: 0.8rem; color: #bcab9a; margin-bottom: 10px; }
+        .info-value { font-size: 1.5rem; font-weight: 700; color: var(--main-brown); }
         .info-value span { color: var(--accent); }
 
-        .v-line { width: 1px; height: 35px; background: #f0f0f0; }
-        .temp-bar-bg { width: 100%; height: 7px; background: #f2f2f2; border-radius: 10px; margin-top: 10px; overflow: hidden; }
-        .temp-bar-fill { height: 100%; background: var(--accent); transition: width 1.5s ease; }
+        .v-line { width: 1px; height: 40px; background: #f0f0f0; margin: 0 10px; }
+        
+        /* 온도 바 설정 (이미지처럼 아래 배치) */
+        .temp-bar-bg { width: 80%; height: 6px; background: #f2f2f2; border-radius: 10px; margin: 12px auto 0; overflow: hidden; }
+        .temp-bar-fill { height: 100%; background: var(--accent); transition: width 1.5s ease; border-radius: 10px; }
 
         /* [입력 카드] */
         .input-card { 
-            width: 92%; background: white; padding: 40px 30px; border-radius: 35px; 
+            width: 92%; background: white; padding: 40px 25px; border-radius: 45px; 
             box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             display: flex; flex-direction: column; align-items: center;
-            min-height: 400px; justify-content: center; position: relative;
+            min-height: 420px; position: relative;
         }
 
-        .input-view { width: 100%; display: flex; flex-direction: column; align-items: center; transition: 0.5s; }
-        
-        .quote-view { 
-            display: none; flex-direction: column; align-items: center; text-align: center;
-            animation: fadeIn 1.2s ease forwards;
-        }
+        .input-view { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .quote-text { font-size: 1.4rem; line-height: 1.8; color: var(--main-brown); margin-bottom: 30px; font-weight: 400; word-break: keep-all; }
-        .btn-retry { 
-            background: transparent; color: #bcab9a; border: 1px solid #eee; 
-            padding: 10px 25px; border-radius: 30px; cursor: pointer; font-size: 0.9rem;
-        }
-
-        /* [수정] 이모티콘 선택 영역 */
-        .emotion-selector { margin-bottom: 25px; display: flex; gap: 15px; }
-        .emotion-btn { cursor: pointer; font-size: 2.5rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
-        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
+        /* 이모티콘 (😮‍💨 -> 😱 변경 완료) */
+        .emotion-selector { margin-bottom: 30px; display: flex; gap: 12px; }
+        .emotion-btn { cursor: pointer; font-size: 2.6rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
+        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.15); }
 
         #content { 
-            width: 100%; height: 160px; border: none; background: transparent;
-            font-size: 1.2rem; outline: none; resize: none; text-align: center;
-            line-height: 1.8; color: #5d564e;
+            width: 100%; height: 150px; border: none; background: transparent;
+            font-size: 1.15rem; outline: none; resize: none; text-align: center;
+            line-height: 1.7; color: #5d564e; margin-bottom: 20px;
         }
 
+        /* [버튼] 이미지처럼 둥근 갈색 타원형 */
         .btn-empty { 
             background: var(--main-brown); color: white; border: none; 
-            margin-top: 30px; padding: 18px 0; width: 100%; max-width: 320px;
-            font-size: 1.4rem; font-weight: 700; border-radius: 50px; cursor: pointer;
+            padding: 18px 0; width: 100%; max-width: 280px;
+            font-size: 1.3rem; font-weight: 700; border-radius: 60px; 
+            cursor: pointer; box-shadow: 0 4px 15px rgba(141, 123, 104, 0.2);
         }
 
-        .burning { transform: scale(0.95); opacity: 0; filter: blur(15px); transition: 1s ease; }
+        /* 응원 문구 뷰 */
+        .quote-view { 
+            display: none; flex-direction: column; align-items: center; text-align: center; justify-content: center;
+            position: absolute; top: 50%; transform: translateY(-50%); width: 85%;
+            animation: fadeIn 1s ease forwards;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .quote-text { font-size: 1.3rem; line-height: 1.8; color: var(--main-brown); margin-bottom: 30px; word-break: keep-all; }
+        .btn-retry { background: transparent; color: #bcab9a; border: 1px solid #eee; padding: 10px 25px; border-radius: 30px; font-size: 0.85rem; }
+
+        /* PC 대응 (가로폭 확장) */
+        @media (min-width: 768px) {
+            .main-wrapper { max-width: 1000px; }
+            .hero-section, .info-card, .input-card { width: 95% !important; }
+            .hero-section { height: 260px; }
+        }
+
+        .burning { transform: scale(0.95); opacity: 0; filter: blur(15px); transition: 0.8s ease; }
     </style>
 </head>
 <body>
@@ -124,12 +127,12 @@
 
     <div class="info-card">
         <div class="info-item">
-            <div class="info-label">비워낸 마음</div>
+            <div class="info-label">비워낸 마음의 기록</div>
             <div class="info-value"><span id="total-val">0</span> 개</div>
         </div>
         <div class="v-line"></div>
         <div class="info-item">
-            <div class="info-label">마음의 온도</div>
+            <div class="info-label">우리의 따뜻한 온도</div>
             <div class="info-value"><span id="temp-text">36.5</span>°C</div>
             <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
         </div>
@@ -141,10 +144,10 @@
                 <span class="emotion-btn active" onclick="selectEmotion(this, '😐')">😐</span>
                 <span class="emotion-btn" onclick="selectEmotion(this, '😰')">😰</span>
                 <span class="emotion-btn" onclick="selectEmotion(this, '😡')">😡</span>
-                <span class="emotion-btn" onclick="selectEmotion(this, '😮‍💨')">😮‍💨</span>
+                <span class="emotion-btn" onclick="selectEmotion(this, '😱')">😱</span>
                 <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
             </div>
-            <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요."></textarea>
+            <textarea id="content" placeholder="버리고 싶은 마음을 이곳에&#10;편하게 적어보세요..."></textarea>
             <button class="btn-empty" onclick="processBurn()">마음 비워내기</button>
         </div>
 
@@ -153,10 +156,10 @@
             <button class="btn-retry" onclick="resetView()">다른 고민 비우기</button>
         </div>
     </div>
-    </div>
+</div>
 
 <script>
-    let selectedEmotion = '😐'; // 기본값 변경
+    let selectedEmotion = '😐';
     window.onload = fetchInfo;
 
     async function fetchInfo() {
@@ -166,7 +169,7 @@
             document.getElementById('total-val').innerText = data.total;
             const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
             document.getElementById('temp-text').innerText = tempVal;
-            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
+            document.getElementById('temp-fill').style.width = Math.min((tempVal / 100) * 100, 100) + "%";
             
             let level = "1단계";
             if(data.total > 100) level = "마스터";
@@ -184,15 +187,15 @@
     }
 
     async function processBurn() {
-        const content = document.getElementById('content');
-        if (!content.value.trim()) return;
+        const area = document.getElementById('content');
+        if (!area.value.trim()) return;
 
         document.getElementById('input-view').classList.add('burning');
         
         try {
             const res = await fetch('/burn', { 
                 method: 'POST', 
-                body: new URLSearchParams({'content': content.value, 'emotion': selectedEmotion}) 
+                body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) 
             });
             const data = await res.json();
 
@@ -201,7 +204,7 @@
                 document.getElementById('quote-view').style.display = 'flex';
                 document.getElementById('quote-text').innerText = data.quote;
                 fetchInfo();
-            }, 1000);
+            }, 800);
         } catch(e) {
             document.getElementById('input-view').classList.remove('burning');
         }
