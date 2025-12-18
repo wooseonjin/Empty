@@ -7,11 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --main-brown: #8d7b68; 
+            /* [수정 1] 칙칙한 갈색 -> 따뜻한 테라코타 색상으로 변경 */
+            --main-brown: #a67c52; 
             --soft-beige: #f9f7f2; 
             --dark-beige: #f2ede4;
             --accent: #e9967a;
-            --line-color: #eee;
+            --line-color: #e0d8d0; /* 선 색상도 살짝 따뜻하게 변경 */
         }
 
         * {
@@ -50,13 +51,14 @@
             gap: 20px; padding: 30px 0;
         }
 
-        /* [상단 배너] */
+        /* [상단 배너] 새 색상 적용 */
         .hero-section {
             width: 100%; padding: 40px 20px;
-            background: linear-gradient(135deg, #a89685 0%, #8d7b68 100%);
+            /* [수정 1-1] 더 부드럽고 따뜻한 그라데이션 */
+            background: linear-gradient(135deg, #c4a484 0%, #a67c52 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center; border-radius: 30px;
-            box-shadow: 0 8px 20px rgba(141, 123, 104, 0.1);
+            box-shadow: 0 8px 20px rgba(166, 124, 82, 0.15);
         }
         .main-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
         .sub-title { font-size: 0.8rem; letter-spacing: 6px; opacity: 0.8; }
@@ -74,7 +76,13 @@
         /* 정보 카드 & 구분선 */
         .info-card { padding: 30px 20px; display: flex; flex-direction: column; justify-content: center; gap: 25px; }
         .info-item { text-align: center; width: 100%; }
-        .info-divider { width: 40%; height: 1px; background: var(--line-color); margin: 5px auto; } /* PC용 세로 배치시 가로선 */
+        
+        /* [수정 2] 구분선 길이 확장 (PC) */
+        .info-divider { 
+            width: 80%; /* 40% -> 80%로 확장 */
+            height: 1px; background: var(--line-color); margin: 5px auto; 
+        } 
+        
         .info-label { font-size: 0.8rem; color: #bcab9a; margin-bottom: 8px; }
         .info-value { font-size: 1.5rem; font-weight: 700; color: var(--main-brown); }
         .temp-bar-bg { width: 80%; height: 6px; background: #f2f2f2; border-radius: 10px; margin: 12px auto 0; overflow: hidden; }
@@ -119,7 +127,14 @@
         @media (max-width: 768px) {
             .burn-layout { grid-template-columns: 1fr; }
             .info-card { flex-direction: row; padding: 20px; gap: 0; }
-            .info-divider { width: 1px; height: 30px; margin: 0 10px; } /* 모바일 가로 배치시 세로선 */
+            
+            /* [수정 2-1] 구분선 길이 확장 (모바일) */
+            .info-divider { 
+                width: 1px; 
+                height: 50px; /* 30px -> 50px로 확장 */
+                margin: 0 20px; 
+            }
+            
             .info-value { font-size: 1.2rem; }
             .info-label { font-size: 0.7rem; }
             .temp-bar-bg { width: 90%; }
@@ -135,148 +150,146 @@
     </style>
 </head>
 <body>
-
-<nav class="top-nav">
-    <div class="nav-container">
-        <div class="nav-logo" onclick="location.reload()">EMPTY</div>
-        <div class="nav-menu">
-            <div class="nav-item active" onclick="switchTab('burn', this)">고민 비우기</div>
-            <div class="nav-item" onclick="switchTab('warmth', this)">온기 나누기</div>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="location.reload()">EMPTY</div>
+            <div class="nav-menu">
+                <div class="nav-item active" onclick="switchTab('burn', this)">고민 비우기</div>
+                <div class="nav-item" onclick="switchTab('warmth', this)">온기 나누기</div>
+            </div>
         </div>
-    </div>
-</nav>
-
-<div class="main-wrapper">
-    <header class="hero-section">
-        <h1 class="main-title">흔적없는 고민 상담소</h1>
-        <div class="sub-title">EMPTY</div>
-    </header>
-
-    <main id="section-burn" class="content-section active">
-        <div class="burn-layout">
-            <aside class="card info-card">
-                <div class="info-item">
-                    <p class="info-label">비워낸 마음의 기록</p>
-                    <p class="info-value"><span id="total-val">0</span> 개</p>
-                </div>
-                <div class="info-divider"></div>
-                <div class="info-item">
-                    <p class="info-label">우리의 따뜻한 온도</p>
-                    <p class="info-value"><span id="temp-text">36.5</span>°C</p>
-                    <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
-                </div>
-            </aside>
-
-            <section class="card input-card">
-                <div id="input-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-                    <div class="emotion-selector">
-                        <span class="emotion-btn active" onclick="selectEmotion(this, '😐')">😐</span>
-                        <span class="emotion-btn" onclick="selectEmotion(this, '😰')">😰</span>
-                        <span class="emotion-btn" onclick="selectEmotion(this, '😡')">😡</span>
-                        <span class="emotion-btn" onclick="selectEmotion(this, '😱')">😱</span>
-                        <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
+    </nav>
+    
+    <div class="main-wrapper">
+        <header class="hero-section">
+            <h1 class="main-title">흔적없는 고민 상담소</h1>
+            <div class="sub-title">EMPTY</div>
+        </header>
+    
+        <main id="section-burn" class="content-section active">
+            <div class="burn-layout">
+                <aside class="card info-card">
+                    <div class="info-item">
+                        <p class="info-label">비워낸 마음의 기록</p>
+                        <p class="info-value"><span id="total-val">0</span> 개</p>
                     </div>
-                    <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요."></textarea>
-                    <button class="btn-empty" onclick="processBurn()">마음 비워내기</button>
-                </div>
-                <div id="quote-view" style="display:none; text-align: center;">
-                    <p id="quote-text" class="quote-text"></p>
-                    <button onclick="resetView()" style="background:none; border:1px solid #ddd; padding:10px 25px; border-radius:30px; color:#bcab9a; cursor:pointer; font-size:0.85rem;">다른 고민 비우기</button>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <main id="section-warmth" class="content-section">
-        <div class="warmth-layout">
-            <div class="card warmth-input-card">
-                <textarea id="warmth-msg" placeholder="누군가에게 힘이 될 한마디를 남겨주세요."></textarea>
-                <button class="btn-share" onclick="shareWarmth()">온기 나누기</button>
+                    <div class="info-divider"></div>
+                    <div class="info-item">
+                        <p class="info-label">우리의 따뜻한 온도</p>
+                        <p class="info-value"><span id="temp-text">36.5</span>°C</p>
+                        <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
+                    </div>
+                </aside>
+    
+                <section class="card input-card">
+                    <div id="input-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                        <div class="emotion-selector">
+                            <span class="emotion-btn active" onclick="selectEmotion(this, '😐')">😐</span>
+                            <span class="emotion-btn" onclick="selectEmotion(this, '😰')">😰</span>
+                            <span class="emotion-btn" onclick="selectEmotion(this, '😡')">😡</span>
+                            <span class="emotion-btn" onclick="selectEmotion(this, '😱')">😱</span>
+                            <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
+                        </div>
+                        <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요."></textarea>
+                        <button class="btn-empty" onclick="processBurn()">마음 비워내기</button>
+                    </div>
+                    <div id="quote-view" style="display:none; text-align: center;">
+                        <p id="quote-text" class="quote-text"></p>
+                        <button onclick="resetView()" style="background:none; border:1px solid #ddd; padding:10px 25px; border-radius:30px; color:#bcab9a; cursor:pointer; font-size:0.85rem;">다른 고민 비우기</button>
+                    </div>
+                </section>
             </div>
-
-            <div class="warmth-list" id="warmth-list">
-                <div class="warmth-card">
-                    <p class="warmth-text">당신이 비워낸 그 자리에 더 큰 행복이 찾아올 거예요. ✨</p>
-                    <span class="warmth-date">방금 전</span>
+        </main>
+    
+        <main id="section-warmth" class="content-section">
+            <div class="warmth-layout">
+                <div class="card warmth-input-card">
+                    <textarea id="warmth-msg" placeholder="누군가에게 힘이 될 한마디를 남겨주세요."></textarea>
+                    <button class="btn-share" onclick="shareWarmth()">온기 나누기</button>
                 </div>
-                <div class="warmth-card">
-                    <p class="warmth-text">오늘도 충분히 잘해냈어요. 당신은 생각보다 훨씬 단단한 사람입니다.</p>
-                    <span class="warmth-date">5분 전</span>
+    
+                <div class="warmth-list" id="warmth-list">
+                    <div class="warmth-card">
+                        <p class="warmth-text">당신이 비워낸 그 자리에 더 큰 행복이 찾아올 거예요. ✨</p>
+                        <span class="warmth-date">방금 전</span>
+                    </div>
+                    <div class="warmth-card">
+                        <p class="warmth-text">오늘도 충분히 잘해냈어요. 당신은 생각보다 훨씬 단단한 사람입니다.</p>
+                        <span class="warmth-date">5분 전</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-</div>
-
-<script>
-    let selectedEmotion = '😐';
-
-    function switchTab(section, el) {
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById('section-' + section).classList.add('active');
-        el.classList.add('active');
-    }
-
-    async function fetchInfo() {
-        try {
-            const res = await fetch('/info');
-            const data = await res.json();
-            document.getElementById('total-val').innerText = data.total;
-            const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
-            document.getElementById('temp-text').innerText = tempVal;
-            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
-        } catch(e) {}
-    }
-
-    function selectEmotion(el, emo) {
-        document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        selectedEmotion = emo;
-    }
-
-    async function processBurn() {
-        const area = document.getElementById('content');
-        if (!area.value.trim()) return;
-        document.getElementById('input-view').classList.add('burning');
-        
-        try {
-            const res = await fetch('/burn', { 
-                method: 'POST', 
-                body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) 
-            });
-            const data = await res.json();
-
-            setTimeout(() => {
-                document.getElementById('input-view').style.display = 'none';
-                document.getElementById('quote-view').style.display = 'block';
-                document.getElementById('quote-text').innerText = data.quote;
-                fetchInfo();
-            }, 800);
-        } catch(e) {
-            document.getElementById('input-view').classList.remove('burning');
+        </main>
+    </div>
+    <script>
+        let selectedEmotion = '😐';
+    
+        function switchTab(section, el) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('section-' + section).classList.add('active');
+            el.classList.add('active');
         }
-    }
-
-    function resetView() {
-        document.getElementById('content').value = "";
-        document.getElementById('input-view').classList.remove('burning');
-        document.getElementById('input-view').style.display = 'flex';
-        document.getElementById('quote-view').style.display = 'none';
-    }
-
-    function shareWarmth() {
-        const msgArea = document.getElementById('warmth-msg');
-        if(!msgArea.value.trim()) return;
-        const list = document.getElementById('warmth-list');
-        const newMsg = document.createElement('div');
-        newMsg.className = 'warmth-card';
-        newMsg.innerHTML = `<p class="warmth-text">${msgArea.value}</p><span class="warmth-date">방금 전</span>`;
-        list.prepend(newMsg);
-        msgArea.value = "";
-    }
-
-    window.onload = fetchInfo;
-</script>
+    
+        async function fetchInfo() {
+            try {
+                const res = await fetch('/info');
+                const data = await res.json();
+                document.getElementById('total-val').innerText = data.total;
+                const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
+                document.getElementById('temp-text').innerText = tempVal;
+                document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
+            } catch(e) {}
+        }
+    
+        function selectEmotion(el, emo) {
+            document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            selectedEmotion = emo;
+        }
+    
+        async function processBurn() {
+            const area = document.getElementById('content');
+            if (!area.value.trim()) return;
+            document.getElementById('input-view').classList.add('burning');
+            
+            try {
+                const res = await fetch('/burn', { 
+                    method: 'POST', 
+                    body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) 
+                });
+                const data = await res.json();
+    
+                setTimeout(() => {
+                    document.getElementById('input-view').style.display = 'none';
+                    document.getElementById('quote-view').style.display = 'block';
+                    document.getElementById('quote-text').innerText = data.quote;
+                    fetchInfo();
+                }, 800);
+            } catch(e) {
+                document.getElementById('input-view').classList.remove('burning');
+            }
+        }
+    
+        function resetView() {
+            document.getElementById('content').value = "";
+            document.getElementById('input-view').classList.remove('burning');
+            document.getElementById('input-view').style.display = 'flex';
+            document.getElementById('quote-view').style.display = 'none';
+        }
+    
+        function shareWarmth() {
+            const msgArea = document.getElementById('warmth-msg');
+            if(!msgArea.value.trim()) return;
+            const list = document.getElementById('warmth-list');
+            const newMsg = document.createElement('div');
+            newMsg.className = 'warmth-card';
+            newMsg.innerHTML = `<p class="warmth-text">${msgArea.value}</p><span class="warmth-date">방금 전</span>`;
+            list.prepend(newMsg);
+            msgArea.value = "";
+        }
+    
+        window.onload = fetchInfo;
+    </script>
 </body>
 </html>
