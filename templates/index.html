@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>흔적없는 고민 상담소 | EMPTY</title>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -10,77 +10,67 @@
 
         * {
             font-family: 'Gaegu', cursive !important;
-            word-break: keep-all;
+            box-sizing: border-box; /* 테두리 때문에 잘리는 현상 방지 */
         }
 
         body { 
             background: linear-gradient(135deg, #f5f5dc 0%, #e7dec8 100%);
             color: #5d564e; 
             display: flex; flex-direction: column; align-items: center; 
-            margin: 0; padding: 60px 20px; min-height: 100vh;
+            margin: 0; padding: 40px 15px; min-height: 100vh;
+            overflow-x: hidden; /* 가로 스크롤 방지 */
         }
 
-        /* 1. 가로 폭을 대폭 늘림 (PC 기준 900px) */
-        .container { width: 100%; max-width: 900px; text-align: center; }
+        /* PC에선 900px까지 넓어지지만, 모바일에선 화면의 95%만 차지하게 */
+        .container { width: 100%; max-width: 850px; text-align: center; }
 
-        .main-title { font-size: 4rem; font-weight: 700; color: var(--main-brown); margin: 0; line-height: 1; }
-        .sub-title { font-size: 1.8rem; color: #bcab9a; margin-bottom: 40px; letter-spacing: 15px; }
+        .main-title { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 700; color: var(--main-brown); margin: 0; }
+        .sub-title { font-size: clamp(1rem, 4vw, 1.8rem); color: #bcab9a; margin-bottom: 30px; letter-spacing: 10px; }
 
-        .total-count { font-size: 1.4rem; color: var(--main-brown); margin-bottom: 20px; }
+        .total-count { font-size: 1.2rem; color: var(--main-brown); margin-bottom: 20px; }
 
-        /* 2. 입력창 영역 가로로 길게 배치 */
+        /* 입력창 카드 - 패딩을 유동적으로 조절 */
         .input-card { 
-            background: rgba(255, 255, 255, 0.75); padding: 40px; border-radius: 40px; 
+            background: rgba(255, 255, 255, 0.75); padding: clamp(20px, 5vw, 40px); border-radius: 40px; 
             box-shadow: 0 15px 40px rgba(0,0,0,0.05); backdrop-filter: blur(10px); margin-bottom: 30px;
+            width: 100%;
         }
 
-        .emotion-selector { margin-bottom: 25px; display: flex; justify-content: center; gap: 30px; }
-        .emotion-btn { cursor: pointer; font-size: 3rem; filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
-        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.2); }
+        .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: clamp(10px, 4vw, 30px); flex-wrap: wrap; }
+        .emotion-btn { cursor: pointer; font-size: clamp(1.8rem, 6vw, 2.8rem); filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
+        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.15); }
 
         #content { 
-            width: 100%; height: 200px; border: none; background: transparent;
-            font-size: 2rem; outline: none; resize: none; text-align: center;
-            line-height: 1.6; color: #5d564e; font-weight: 700;
+            width: 100%; height: clamp(150px, 30vh, 220px); border: none; background: transparent;
+            font-size: clamp(1.4rem, 4vw, 1.8rem); outline: none; resize: none; text-align: center;
+            line-height: 1.5; color: #5d564e; font-weight: 700;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: #fff; border: none; 
-            padding: 15px 120px; font-size: 2.2rem; font-weight: 700;
+            padding: 15px 0; width: clamp(200px, 60%, 400px); font-size: 1.8rem; font-weight: 700;
             border-radius: 60px; cursor: pointer; transition: 0.3s; 
             box-shadow: 0 8px 20px rgba(141, 123, 104, 0.3);
         }
-        .btn-empty:hover { transform: scale(1.05); background: #766352; }
 
-        /* 3. 대시보드 가로 확장 */
+        /* 대시보드 - 모바일에서 짤리지 않게 flex-wrap 설정 */
         .dashboard {
-            display: flex; justify-content: space-around; align-items: center;
-            margin-top: 50px; padding: 30px; background: rgba(255,255,255,0.4); border-radius: 30px;
+            display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;
+            margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.4); border-radius: 30px; gap: 10px;
         }
-        .stat-card { flex: 1; }
-        .stat-emoji { font-size: 2.5rem; display: block; margin-bottom: 10px; }
-        .stat-num { font-size: 1.6rem; color: var(--main-brown); font-weight: bold; }
+        .stat-card { min-width: 60px; flex: 1; }
+        .stat-emoji { font-size: 2rem; display: block; margin-bottom: 5px; }
+        .stat-num { font-size: 1.3rem; color: var(--main-brown); font-weight: bold; }
 
-        /* 4. 온도 섹션 가로 배치 */
-        .temp-section { margin-top: 40px; width: 100%; max-width: 800px; }
-        .temp-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 1.6rem; font-weight: bold; }
-        .temp-bar-bg { width: 100%; height: 18px; background: rgba(255,255,255,0.5); border-radius: 20px; overflow: hidden; }
-        .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1.2s ease-in-out; }
+        /* 온도 섹션 */
+        .temp-section { margin-top: 40px; width: 100%; }
+        .temp-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 1.4rem; font-weight: bold; }
+        .temp-bar-bg { width: 100%; height: 15px; background: rgba(255,255,255,0.5); border-radius: 20px; overflow: hidden; }
+        .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1s; }
 
-        /* 모바일 대응 (화면 작아지면 다시 좁게) */
-        @media (max-width: 768px) {
-            .container { max-width: 100%; }
-            .main-title { font-size: 3rem; }
-            .emotion-selector { gap: 15px; }
-            .emotion-btn { font-size: 2.2rem; }
-            .dashboard { padding: 15px 5px; }
-            .stat-emoji { font-size: 1.8rem; }
-            .stat-num { font-size: 1.2rem; }
-        }
-
-        #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 238, 227, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 40px; }
+        #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 238, 227, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 30px; text-align: center; }
         .burning { animation: vanish 1.5s forwards; }
-        @keyframes vanish { to { opacity: 0; transform: scale(0.9) translateY(-30px); filter: blur(15px); } }
+        @keyframes vanish { to { opacity: 0; transform: scale(0.9) translateY(-20px); filter: blur(10px); } }
     </style>
 </head>
 <body>
@@ -89,7 +79,7 @@
     <h1 class="main-title">흔적없는 고민 상담소</h1>
     <div class="sub-title">EMPTY</div>
     
-    <div class="total-count">비워낸 마음의 기록 : <span id="total-val">0</span>개</div>
+    <div class="total-count">오늘 비워낸 마음 : <span id="total-val">0</span>개</div>
 
     <div class="input-card">
         <div class="emotion-selector">
@@ -99,7 +89,7 @@
             <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
             <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
         </div>
-        <textarea id="content" placeholder="버리고 싶은 무거운 마음을 이곳에 편하게 적어주세요..."></textarea>
+        <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요..."></textarea>
     </div>
     
     <button class="btn-empty" id="burn-btn" onclick="processBurn()">마음 비워내기</button>
@@ -114,7 +104,7 @@
 
     <div class="temp-section">
         <div class="temp-info">
-            <span>상담소의 따뜻한 온도</span>
+            <span>우리의 따뜻한 온도</span>
             <span><span id="temp-text">36.5</span>°C</span>
         </div>
         <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
@@ -122,8 +112,8 @@
 </div>
 
 <div id="quote-overlay">
-    <div id="quote-text" style="font-size: 3rem; color: var(--main-brown); text-align: center; line-height: 1.5;"></div>
-    <div style="margin-top:30px; font-size: 1.8rem; opacity: 0.7;">마음이 한결 가벼워졌기를 바랍니다.</div>
+    <div id="quote-text" style="font-size: 2.2rem; color: var(--main-brown); line-height: 1.5; margin-bottom: 20px;"></div>
+    <div style="font-size: 1.4rem; opacity: 0.7;">고민은 사라지고 평온만 남기를.</div>
 </div>
 
 <script>
@@ -141,16 +131,8 @@
             const res = await fetch('/info');
             const data = await res.json();
             document.getElementById('total-val').innerText = data.total;
-
-            const stats = [
-                Math.ceil(data.total * 0.3), Math.ceil(data.total * 0.2), 
-                Math.ceil(data.total * 0.15), Math.ceil(data.total * 0.1), 
-                Math.ceil(data.total * 0.25)
-            ];
-            stats.forEach((num, i) => {
-                document.getElementById(`stat-${i}`).innerText = data.total > 0 ? num : 0;
-            });
-
+            const stats = [Math.ceil(data.total * 0.3), Math.ceil(data.total * 0.2), Math.ceil(data.total * 0.15), Math.ceil(data.total * 0.1), Math.ceil(data.total * 0.25)];
+            stats.forEach((num, i) => { document.getElementById(`stat-${i}`).innerText = data.total > 0 ? num : 0; });
             const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
             document.getElementById('temp-text').innerText = tempVal;
             document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
@@ -160,14 +142,11 @@
     async function processBurn() {
         const area = document.getElementById('content');
         const btn = document.getElementById('burn-btn');
-        const text = area.value.trim();
-        if (!text) return;
-
+        if (!area.value.trim()) return;
         btn.disabled = true;
         const fd = new FormData();
-        fd.append('content', text);
+        fd.append('content', area.value);
         fd.append('emotion', selectedEmotion);
-
         try {
             const res = await fetch('/burn', { method: 'POST', body: fd });
             const data = await res.json();
@@ -178,15 +157,11 @@
                 document.getElementById('quote-overlay').style.display = 'flex';
                 setTimeout(() => {
                     document.getElementById('quote-overlay').style.display = 'none';
-                    area.value = "";
-                    area.classList.remove('burning');
-                    btn.disabled = false;
-                    fetchInfo();
+                    area.value = ""; area.classList.remove('burning');
+                    btn.disabled = false; fetchInfo();
                 }, 3000);
             }, 1200);
-        } catch(e) {
-            btn.disabled = false;
-        }
+        } catch(e) { btn.disabled = false; }
     }
 </script>
 </body>
