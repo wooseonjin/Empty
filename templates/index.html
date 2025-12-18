@@ -2,100 +2,99 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>흔적없는 고민 상담소 | EMPTY</title>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
             --main-brown: #8d7b68; 
-            --soft-beige: #f3eee3; 
+            --soft-beige: #f5f5dc; 
             --accent: #e9967a;
-            --bg-color: #f9f7f2;
         }
 
         * {
+            /* 폰트 설정 유지 */
             font-family: 'Gowun Dodum', sans-serif !important;
             box-sizing: border-box; margin: 0; padding: 0;
         }
 
         body { 
-            background-color: var(--bg-color);
+            background-color: #f9f7f2; /* 원래의 따뜻한 배경색 */
             color: #5d564e; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            overflow-x: hidden;
         }
 
-        /* [상단 헤더 비주얼 영역] - 보내주신 이미지의 초록색 영역 느낌 */
+        /* [상단 배너 영역] - 이미지처럼 시원한 곡선과 여백 */
         .hero-section {
-            width: 100%; height: 35vh;
-            background: linear-gradient(135deg, #8d7b68 0%, #b3a594 100%);
+            width: 100%; height: 260px;
+            background: linear-gradient(135deg, #a89685 0%, #8d7b68 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center;
-            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
+            border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
+            position: relative; padding-bottom: 40px;
         }
 
-        .main-title { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; margin-bottom: 10px; }
-        .sub-title { font-size: 1.1rem; letter-spacing: 12px; opacity: 0.9; }
-
-        /* [마음 등급 태그] - 상단 오른쪽 고정 */
         .rank-tag {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(255,255,255,0.2); padding: 8px 18px;
-            border-radius: 20px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.3);
+            position: absolute; top: 50px; right: 25px;
+            background: rgba(255,255,255,0.2); padding: 5px 12px;
+            border-radius: 15px; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* [메인 컨텐츠 컨테이너] */
+        .main-title { font-size: 2.4rem; font-weight: 700; margin-bottom: 5px; }
+        .sub-title { font-size: 0.9rem; letter-spacing: 10px; opacity: 0.8; }
+
+        /* [메인 컨텐츠 컨테이너] - 전체적으로 90% 너비 유지하여 여백 확보 */
         .content-wrapper {
-            width: 90%; max-width: 900px;
-            transform: translateY(-50px); /* 헤더에 살짝 걸치게 배치 */
-            display: flex; flex-direction: column; gap: 20px;
+            width: 90%; max-width: 480px;
+            margin-top: -50px; /* 배너 위로 살짝 겹치게 */
+            display: flex; flex-direction: column; gap: 15px;
+            padding-bottom: 50px;
         }
 
-        /* [비워낸 마음 & 온도 카드] - 이미지의 상단 흰색 카드 느낌 */
-        .info-card {
-            background: white; padding: 25px; border-radius: 25px;
-            display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05); align-items: center;
+        /* [기능 카드 공통 스타일] */
+        .card {
+            background: white; border-radius: 30px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.04);
+            overflow: hidden;
         }
-        .info-item { text-align: center; border-right: 1px solid #eee; }
-        .info-item:last-child { border-right: none; }
-        .info-label { font-size: 0.9rem; color: #bcab9a; margin-bottom: 8px; }
-        .info-value { font-size: 1.6rem; font-weight: 700; color: var(--main-brown); }
+
+        /* [정보 카드] - 비워낸 마음 & 온도 */
+        .info-card {
+            padding: 22px; display: flex; justify-content: space-around; align-items: center;
+        }
+        .info-item { text-align: center; flex: 1; }
+        .info-label { font-size: 0.85rem; color: #bcab9a; margin-bottom: 8px; }
+        .info-value { font-size: 1.4rem; font-weight: 700; color: var(--main-brown); }
         .info-value span { color: var(--accent); }
 
-        /* [입력 영역 카드] */
-        .input-card { 
-            background: white; padding: 30px; border-radius: 30px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            display: flex; flex-direction: column; align-items: center;
-        }
+        .v-line { width: 1px; height: 35px; background: #f0f0f0; }
 
-        .emotion-selector { margin-bottom: 25px; display: flex; justify-content: center; gap: clamp(10px, 4vw, 30px); }
-        .emotion-btn { cursor: pointer; font-size: 2.5rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
-        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.2); }
+        .temp-bar-container { width: 100%; padding: 0 10px; }
+        .temp-bar-bg { width: 100%; height: 7px; background: #f0f0f0; border-radius: 10px; margin-top: 10px; overflow: hidden; }
+        .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1.5s ease; }
+
+        /* [입력 카드] */
+        .input-card { padding: 25px; display: flex; flex-direction: column; align-items: center; }
+
+        .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 18px; }
+        .emotion-btn { cursor: pointer; font-size: 2.4rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
+        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
 
         #content { 
-            width: 100%; height: 180px; border: none; background: #fdfdfd;
-            font-size: 1.4rem; outline: none; resize: none; text-align: center;
-            line-height: 1.6; color: #5d564e; padding: 10px;
+            width: 100%; height: 150px; border: none; background: transparent;
+            font-size: 1.15rem; outline: none; resize: none; text-align: center;
+            line-height: 1.6; color: #5d564e;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: white; border: none; 
-            margin-top: 20px; padding: 15px 80px; font-size: 1.6rem; font-weight: 700;
-            border-radius: 50px; cursor: pointer; transition: 0.3s;
+            margin-top: 15px; padding: 14px 0; width: 100%; font-size: 1.3rem; font-weight: 700;
+            border-radius: 40px; cursor: pointer;
         }
-        .btn-empty:hover { background: #766352; transform: translateY(-2px); }
 
-        /* [온도 게이지 바] */
-        .temp-bar-bg { width: 100%; height: 10px; background: #f0f0f0; border-radius: 10px; margin-top: 10px; overflow: hidden; }
-        .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1.5s ease; }
-
-        /* [하단 랜덤 응원 문구] */
+        /* [하단 응원 메시지] */
         .footer-cheer {
-            margin: 20px 0 40px 0; font-size: 1rem; color: #bcab9a; font-style: italic; text-align: center;
+            margin-top: 5px; font-size: 0.85rem; color: #bcab9a; text-align: center; font-style: normal;
         }
 
         #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 238, 227, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 40px; text-align: center; }
@@ -104,25 +103,28 @@
 <body>
 
 <div class="hero-section">
-    <div class="rank-tag">나의 마음 레벨: <span id="rank-level">1단계</span></div>
+    <div class="rank-tag">마음 레벨: <span id="rank-level">1단계</span></div>
     <h1 class="main-title">흔적없는 고민 상담소</h1>
     <div class="sub-title">EMPTY</div>
 </div>
 
 <div class="content-wrapper">
-    <div class="info-card">
+    <div class="card info-card">
         <div class="info-item">
-            <div class="info-label">비워낸 마음의 기록</div>
+            <div class="info-label">비워낸 마음</div>
             <div class="info-value"><span id="total-val">0</span> 개</div>
         </div>
-        <div class="info-item" style="border-right: none;">
-            <div class="info-label">우리의 따뜻한 온도</div>
+        <div class="v-line"></div>
+        <div class="info-item">
+            <div class="info-label">마음의 온도</div>
             <div class="info-value"><span id="temp-text">36.5</span>°C</div>
-            <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
+            <div class="temp-bar-container">
+                <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
+            </div>
         </div>
     </div>
 
-    <div class="input-card">
+    <div class="card input-card">
         <div class="emotion-selector">
             <span class="emotion-btn active" onclick="selectEmotion(this, '😶')">😶</span>
             <span class="emotion-btn" onclick="selectEmotion(this, '😢')">😢</span>
@@ -130,69 +132,45 @@
             <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
             <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
         </div>
-        <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요..."></textarea>
-        <button class="btn-empty" id="burn-btn" onclick="processBurn()">마음 비워내기</button>
+        <textarea id="content" placeholder="버리고 싶은 무거운 마음을 이곳에..."></textarea>
+        <button class="btn-empty" onclick="processBurn()">마음 비워내기</button>
     </div>
 
-    <div id="cheer-msg" class="footer-cheer">잠시 마음을 내려놓아도 괜찮아요.</div>
-</div>
-
-<div id="quote-overlay">
-    <div id="quote-text" style="font-size: 2rem; color: var(--main-brown); line-height: 1.6;"></div>
+    <div id="cheer-msg" class="footer-cheer">오늘도 참 잘해왔어요.</div>
 </div>
 
 <script>
     let selectedEmotion = '😶';
-    const cheers = ["오늘 하루도 참 고생 많았어요.", "잠시 쉬어가도 괜찮은 시간이에요.", "당신은 충분히 잘해내고 있어요.", "무거운 마음은 이곳에 두고 가세요."];
-
-    window.onload = () => {
-        document.getElementById('cheer-msg').innerText = cheers[Math.floor(Math.random() * cheers.length)];
-        fetchInfo();
-    };
-
-    function selectEmotion(el, emo) {
-        document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        selectedEmotion = emo;
-    }
-
     async function fetchInfo() {
         try {
             const res = await fetch('/info');
             const data = await res.json();
             document.getElementById('total-val').innerText = data.total;
+            const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
+            document.getElementById('temp-text').innerText = tempVal;
+            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
+            
             let level = "1단계";
             if(data.total > 100) level = "마스터";
             else if(data.total > 50) level = "4단계";
             else if(data.total > 20) level = "3단계";
             else if(data.total > 5) level = "2단계";
             document.getElementById('rank-level').innerText = level;
-            const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
-            document.getElementById('temp-text').innerText = tempVal;
-            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
         } catch(e) {}
     }
-
+    window.onload = fetchInfo;
+    function selectEmotion(el, emo) {
+        document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        selectedEmotion = emo;
+    }
     async function processBurn() {
         const area = document.getElementById('content');
-        const btn = document.getElementById('burn-btn');
         if (!area.value.trim()) return;
-        btn.disabled = true;
-        try {
-            const res = await fetch('/burn', { method: 'POST', body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) });
-            const data = await res.json();
-            area.style.transition = "0.8s"; area.style.opacity = "0";
-            setTimeout(async () => {
-                await fetch(`/delete/${data.id}`, { method: 'DELETE' });
-                document.getElementById('quote-text').innerText = data.quote;
-                document.getElementById('quote-overlay').style.display = 'flex';
-                setTimeout(() => {
-                    document.getElementById('quote-overlay').style.display = 'none';
-                    area.value = ""; area.style.opacity = "1";
-                    btn.disabled = false; fetchInfo();
-                }, 2500);
-            }, 800);
-        } catch(e) { btn.disabled = false; }
+        const res = await fetch('/burn', { method: 'POST', body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) });
+        const data = await res.json();
+        area.value = ""; fetchInfo();
+        alert(data.quote);
     }
 </script>
 </body>
