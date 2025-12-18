@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>흔적없는 고민 상담소 | EMPTY</title>
-    <link href="https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105@1.1/Cafe24Ssurround.woff" rel="stylesheet">
     <style>
+        /* 폰트 불러오기 방식 보완 */
         @font-face {
             font-family: 'Cafe24Ssurround';
             src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105@1.1/Cafe24Ssurround.woff') format('woff');
@@ -15,24 +15,26 @@
 
         :root { --main-brown: #8d7b68; --soft-beige: #f3eee3; --accent: #e9967a; }
 
+        /* 모든 요소에 폰트 강제 적용 */
+        * {
+            font-family: 'Cafe24Ssurround', sans-serif !important;
+        }
+
         body { 
             background: linear-gradient(135deg, #f5f5dc 0%, #e7dec8 100%);
             color: #5d564e; 
-            font-family: 'Cafe24Ssurround', sans-serif; /* 요청하신 귀여운 폰트 */
             display: flex; flex-direction: column; align-items: center; 
             margin: 0; padding: 40px 20px; min-height: 100vh;
             word-break: keep-all;
         }
 
-        /* 모바일에 최적화된 아담한 사이즈 */
+        /* 모바일 최적화 컴팩트 사이즈 */
         .container { width: 95%; max-width: 400px; text-align: center; }
 
         .main-title { font-size: 2.2rem; font-weight: 700; color: var(--main-brown); margin: 0; line-height: 1.2; }
         .sub-title { font-size: 1.1rem; color: #bcab9a; margin-bottom: 25px; letter-spacing: 5px; }
-
         .total-count { font-size: 1rem; color: var(--main-brown); margin-bottom: 15px; opacity: 0.8; }
 
-        /* 입력창 카드 */
         .input-card { 
             background: rgba(255, 255, 255, 0.75); padding: 30px 20px; border-radius: 30px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); backdrop-filter: blur(10px); margin-bottom: 25px;
@@ -44,19 +46,18 @@
 
         #content { 
             width: 100%; height: 140px; border: none; background: transparent;
-            font-family: 'Cafe24Ssurround', sans-serif; font-size: 1.2rem; outline: none; resize: none; text-align: center;
+            font-size: 1.2rem; outline: none; resize: none; text-align: center;
             line-height: 1.6; color: #5d564e;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: #fff; border: none; 
-            padding: 12px 40px; font-size: 1.3rem; font-family: 'Cafe24Ssurround', sans-serif;
+            padding: 12px 40px; font-size: 1.3rem;
             border-radius: 50px; cursor: pointer; transition: 0.3s; 
             box-shadow: 0 5px 15px rgba(141, 123, 104, 0.2);
         }
         .btn-empty:hover { transform: scale(1.03); background: #766352; }
 
-        /* 감정 대시보드 */
         .dashboard {
             display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px;
             margin-top: 30px; padding: 15px 10px; background: rgba(255,255,255,0.4); border-radius: 20px;
@@ -65,12 +66,10 @@
         .stat-emoji { font-size: 1.4rem; display: block; margin-bottom: 3px; }
         .stat-num { font-size: 0.9rem; color: var(--main-brown); font-weight: bold; }
 
-        /* 온도 게이지 */
         .temp-section { margin-top: 25px; width: 100%; }
         .temp-bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.05); border-radius: 10px; margin-top: 8px; overflow: hidden; }
         .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1s ease-in-out; }
 
-        /* 결과 오버레이 */
         #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 238, 227, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 30px; }
         .burning { animation: vanish 1.5s forwards; }
         @keyframes vanish { to { opacity: 0; transform: scale(0.8) translateY(-20px); filter: blur(10px); } }
