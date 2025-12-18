@@ -8,7 +8,6 @@
     <style>
         :root { --main-brown: #8d7b68; --soft-beige: #f3eee3; --accent: #e9967a; }
 
-        /* 모든 요소에 폰트를 강제로 입히는 설정입니다 */
         * {
             font-family: 'Gaegu', cursive !important;
             word-break: keep-all;
@@ -18,59 +17,70 @@
             background: linear-gradient(135deg, #f5f5dc 0%, #e7dec8 100%);
             color: #5d564e; 
             display: flex; flex-direction: column; align-items: center; 
-            margin: 0; padding: 40px 20px; min-height: 100vh;
+            margin: 0; padding: 60px 20px; min-height: 100vh;
         }
 
-        /* 모바일 최적화 아담한 사이즈 */
-        .container { width: 95%; max-width: 400px; text-align: center; }
+        /* 1. 가로 폭을 대폭 늘림 (PC 기준 900px) */
+        .container { width: 100%; max-width: 900px; text-align: center; }
 
-        .main-title { font-size: 3rem; font-weight: 700; color: var(--main-brown); margin: 0; line-height: 1.1; }
-        .sub-title { font-size: 1.5rem; color: #bcab9a; margin-bottom: 25px; letter-spacing: 5px; }
+        .main-title { font-size: 4rem; font-weight: 700; color: var(--main-brown); margin: 0; line-height: 1; }
+        .sub-title { font-size: 1.8rem; color: #bcab9a; margin-bottom: 40px; letter-spacing: 15px; }
 
-        .total-count { font-size: 1.2rem; color: var(--main-brown); margin-bottom: 15px; opacity: 0.8; }
+        .total-count { font-size: 1.4rem; color: var(--main-brown); margin-bottom: 20px; }
 
-        /* 입력창 카드 - 아담하고 동글게 */
+        /* 2. 입력창 영역 가로로 길게 배치 */
         .input-card { 
-            background: rgba(255, 255, 255, 0.75); padding: 30px 20px; border-radius: 35px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); backdrop-filter: blur(10px); margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.75); padding: 40px; border-radius: 40px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05); backdrop-filter: blur(10px); margin-bottom: 30px;
         }
 
-        .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; }
-        .emotion-btn { cursor: pointer; font-size: 2.2rem; filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
-        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.15); }
+        .emotion-selector { margin-bottom: 25px; display: flex; justify-content: center; gap: 30px; }
+        .emotion-btn { cursor: pointer; font-size: 3rem; filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
+        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.2); }
 
         #content { 
-            width: 100%; height: 150px; border: none; background: transparent;
-            font-size: 1.6rem; outline: none; resize: none; text-align: center;
-            line-height: 1.4; color: #5d564e; font-weight: 700;
+            width: 100%; height: 200px; border: none; background: transparent;
+            font-size: 2rem; outline: none; resize: none; text-align: center;
+            line-height: 1.6; color: #5d564e; font-weight: 700;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: #fff; border: none; 
-            padding: 12px 50px; font-size: 1.8rem; font-weight: 700;
-            border-radius: 50px; cursor: pointer; transition: 0.3s; 
-            box-shadow: 0 5px 15px rgba(141, 123, 104, 0.2);
+            padding: 15px 120px; font-size: 2.2rem; font-weight: 700;
+            border-radius: 60px; cursor: pointer; transition: 0.3s; 
+            box-shadow: 0 8px 20px rgba(141, 123, 104, 0.3);
         }
-        .btn-empty:hover { transform: scale(1.03); background: #766352; }
+        .btn-empty:hover { transform: scale(1.05); background: #766352; }
 
-        /* 대시보드 - 컴팩트 디자인 */
+        /* 3. 대시보드 가로 확장 */
         .dashboard {
-            display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px;
-            margin-top: 30px; padding: 15px 10px; background: rgba(255,255,255,0.4); border-radius: 20px;
+            display: flex; justify-content: space-around; align-items: center;
+            margin-top: 50px; padding: 30px; background: rgba(255,255,255,0.4); border-radius: 30px;
         }
-        .stat-card { text-align: center; }
-        .stat-emoji { font-size: 1.6rem; display: block; margin-bottom: 3px; }
-        .stat-num { font-size: 1.2rem; color: var(--main-brown); font-weight: bold; }
+        .stat-card { flex: 1; }
+        .stat-emoji { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+        .stat-num { font-size: 1.6rem; color: var(--main-brown); font-weight: bold; }
 
-        /* 마음 온도 게이지 */
-        .temp-section { margin-top: 25px; width: 100%; }
-        .temp-bar-bg { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; margin-top: 8px; overflow: hidden; }
-        .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1s ease-in-out; }
+        /* 4. 온도 섹션 가로 배치 */
+        .temp-section { margin-top: 40px; width: 100%; max-width: 800px; }
+        .temp-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 1.6rem; font-weight: bold; }
+        .temp-bar-bg { width: 100%; height: 18px; background: rgba(255,255,255,0.5); border-radius: 20px; overflow: hidden; }
+        .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1.2s ease-in-out; }
 
-        /* 결과 화면 오버레이 */
-        #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 238, 227, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 30px; }
+        /* 모바일 대응 (화면 작아지면 다시 좁게) */
+        @media (max-width: 768px) {
+            .container { max-width: 100%; }
+            .main-title { font-size: 3rem; }
+            .emotion-selector { gap: 15px; }
+            .emotion-btn { font-size: 2.2rem; }
+            .dashboard { padding: 15px 5px; }
+            .stat-emoji { font-size: 1.8rem; }
+            .stat-num { font-size: 1.2rem; }
+        }
+
+        #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 238, 227, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 40px; }
         .burning { animation: vanish 1.5s forwards; }
-        @keyframes vanish { to { opacity: 0; transform: scale(0.8) translateY(-20px); filter: blur(10px); } }
+        @keyframes vanish { to { opacity: 0; transform: scale(0.9) translateY(-30px); filter: blur(15px); } }
     </style>
 </head>
 <body>
@@ -79,7 +89,7 @@
     <h1 class="main-title">흔적없는 고민 상담소</h1>
     <div class="sub-title">EMPTY</div>
     
-    <div class="total-count">비워낸 마음 <span id="total-val">0</span>개</div>
+    <div class="total-count">비워낸 마음의 기록 : <span id="total-val">0</span>개</div>
 
     <div class="input-card">
         <div class="emotion-selector">
@@ -89,10 +99,10 @@
             <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
             <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
         </div>
-        <textarea id="content" placeholder="버리고 싶은 마음을 적어보세요..."></textarea>
+        <textarea id="content" placeholder="버리고 싶은 무거운 마음을 이곳에 편하게 적어주세요..."></textarea>
     </div>
     
-    <button class="btn-empty" id="burn-btn" onclick="processBurn()">비워내기</button>
+    <button class="btn-empty" id="burn-btn" onclick="processBurn()">마음 비워내기</button>
 
     <div class="dashboard">
         <div class="stat-card"><span class="stat-emoji">😶</span><span class="stat-num" id="stat-0">0</span></div>
@@ -103,8 +113,8 @@
     </div>
 
     <div class="temp-section">
-        <div style="display:flex; justify-content: space-between; font-size: 1.3rem;">
-            <span>오늘의 마음 온도</span>
+        <div class="temp-info">
+            <span>상담소의 따뜻한 온도</span>
             <span><span id="temp-text">36.5</span>°C</span>
         </div>
         <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
@@ -112,8 +122,8 @@
 </div>
 
 <div id="quote-overlay">
-    <div id="quote-text" style="font-size: 2.5rem; color: var(--main-brown); text-align: center; line-height: 1.4;"></div>
-    <div style="margin-top:20px; font-size: 1.5rem; opacity: 0.6;">당신의 내일은 오늘보다 더 맑을 거예요.</div>
+    <div id="quote-text" style="font-size: 3rem; color: var(--main-brown); text-align: center; line-height: 1.5;"></div>
+    <div style="margin-top:30px; font-size: 1.8rem; opacity: 0.7;">마음이 한결 가벼워졌기를 바랍니다.</div>
 </div>
 
 <script>
@@ -173,7 +183,7 @@
                     btn.disabled = false;
                     fetchInfo();
                 }, 3000);
-            }, 1000);
+            }, 1200);
         } catch(e) {
             btn.disabled = false;
         }
