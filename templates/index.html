@@ -3,69 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>비움 (Empty)</title>
+    <title>EMPTY | 고민 상담소</title>
     <link href="https://hangeul.naver.com/2017-nanum?family=NanumSquareRound" rel="stylesheet">
     <style>
-        :root { --bg: #f8f5f0; --point: #a4907c; --text: #5d564e; }
-        body { background: var(--bg); color: var(--text); font-family: 'NanumSquareRound', sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 40px 20px; }
-        .container { width: 100%; max-width: 450px; text-align: center; position: relative; }
+        :root { --bg: #fdfaf5; --point: #8e7a66; --sub: #d6ccc2; --text: #4a443f; }
+        body { background: var(--bg); color: var(--text); font-family: 'NanumSquareRound', sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 60px 20px; line-height: 1.6; }
         
-        /* BGM 버튼 */
-        .bgm-ctrl { position: absolute; top: -20px; right: 0; cursor: pointer; font-size: 1.5rem; background: none; border: none; }
-
-        h1 { font-weight: 800; color: var(--point); margin-bottom: 5px; }
-        .total-count { font-size: 0.8rem; color: #bcab9a; margin-bottom: 25px; }
+        .container { width: 100%; max-width: 550px; text-align: center; }
         
-        /* 감정 선택 */
-        .emotion-selector { margin-bottom: 15px; display: flex; justify-content: center; gap: 10px; }
-        .emotion-btn { cursor: pointer; font-size: 1.2rem; border: 2px solid transparent; border-radius: 50%; padding: 5px; transition: 0.3s; }
-        .emotion-btn.active { border-color: var(--point); background: white; }
-
-        #content { width: 100%; height: 160px; background: white; border: 2px solid #efe9de; border-radius: 25px; padding: 20px; font-size: 1rem; outline: none; box-sizing: border-box; transition: 0.3s; }
-        #content:focus { border-color: var(--point); }
-
-        .btn-empty { margin-top: 20px; padding: 15px 60px; background: var(--point); color: white; border: none; font-size: 1.1rem; font-weight: bold; border-radius: 50px; cursor: pointer; transition: 0.3s; }
+        /* 타이틀 강조 */
+        h1 { font-weight: 800; font-size: 3.2rem; color: var(--point); margin: 0; letter-spacing: 4px; }
+        .subtitle { font-size: 1.1rem; color: var(--sub); margin-top: 10px; margin-bottom: 40px; font-weight: 700; }
         
-        /* 위로 명언 팝업 */
-        #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(248, 245, 240, 0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; text-align: center; }
-        #quote-text { font-size: 1.3rem; font-weight: bold; color: var(--point); padding: 20px; }
+        .total-count { background: #fff; display: inline-block; padding: 5px 20px; border-radius: 50px; font-size: 0.85rem; color: var(--point); box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-bottom: 30px; }
 
-        .history-section { margin-top: 40px; width: 100%; max-width: 450px; }
-        .message-item { background: white; padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--point); animation: slide 0.5s ease; }
-        @keyframes slide { from { opacity: 0; transform: translateY(10px); } }
-        .burning { animation: burn 1.5s forwards; }
-        @keyframes burn { to { opacity: 0; transform: scale(0.9) translateY(-20px); filter: blur(10px); } }
+        /* 입력 영역 디자인 */
+        .input-card { background: #fff; padding: 30px; border-radius: 35px; box-shadow: 0 20px 40px rgba(142, 122, 102, 0.08); margin-bottom: 30px; }
+        
+        .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 15px; }
+        .emotion-btn { cursor: pointer; font-size: 1.4rem; opacity: 0.4; transition: 0.3s; filter: grayscale(1); }
+        .emotion-btn.active { opacity: 1; filter: grayscale(0); transform: scale(1.2); }
+
+        #content { width: 100%; height: 180px; border: none; font-family: inherit; font-size: 1.1rem; outline: none; resize: none; color: var(--text); background: transparent; }
+        
+        .btn-empty { background: var(--point); color: #fff; border: none; padding: 18px 80px; font-size: 1.2rem; font-weight: 800; border-radius: 50px; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(142, 122, 102, 0.2); }
+        .btn-empty:hover { transform: translateY(-3px); background: #766352; }
+        .btn-empty:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* 히스토리 섹션 세련되게 */
+        .history-section { margin-top: 60px; width: 100%; max-width: 550px; }
+        .history-title { font-weight: 800; color: var(--sub); font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; text-align: left; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .message-item { background: rgba(255,255,255,0.5); padding: 20px; border-radius: 20px; margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; transition: 0.3s; }
+        .message-item:hover { background: #fff; }
+
+        /* 효과 */
+        #quote-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(253, 250, 245, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
+        .burning { animation: dissolve 1.5s forwards; }
+        @keyframes dissolve { to { opacity: 0; transform: translateY(-30px) scale(0.95); filter: blur(15px); } }
+        
+        .bgm-btn { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; background: #fff; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; font-size: 1.2rem; z-index: 100; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <button class="bgm-ctrl" onclick="toggleBGM()">🎵</button>
-    <h1>비움</h1>
-    <div class="total-count">지금까지 <span id="total-val">0</span>개의 마음이 비워졌습니다.</div>
+    <div class="total-count">누적 비움 <span id="total-val">0</span>회</div>
+    <h1>EMPTY</h1>
+    <div class="subtitle">흔적없는 고민 상담소</div>
     
-    <div class="emotion-selector">
-        <span class="emotion-btn active" onclick="selectEmotion(this, '😶')">😶</span>
-        <span class="emotion-btn" onclick="selectEmotion(this, '😢')">😢</span>
-        <span class="emotion-btn" onclick="selectEmotion(this, '😡')">😡</span>
-        <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
-        <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
+    <div class="input-card">
+        <div class="emotion-selector">
+            <span class="emotion-btn active" onclick="selectEmotion(this, '😶')">😶</span>
+            <span class="emotion-btn" onclick="selectEmotion(this, '😢')">😢</span>
+            <span class="emotion-btn" onclick="selectEmotion(this, '😡')">😡</span>
+            <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
+            <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
+        </div>
+        <textarea id="content" placeholder="이곳에 적는 순간, 당신의 고민은 흔적 없이 사라집니다."></textarea>
     </div>
+    
+    <button class="btn-empty" id="burn-btn" onclick="processBurn()">비워내기</button>
 
-    <textarea id="content" placeholder="당신의 마음을 적어주세요..."></textarea>
-    <button class="btn-empty" onclick="processBurn()">마음 비우기</button>
-</div>
-
-<div class="history-section">
-    <div id="history-list"></div>
+    <div class="history-section">
+        <div class="history-title">Recently Emptied</div>
+        <div id="history-list"></div>
+    </div>
 </div>
 
 <div id="quote-overlay">
-    <div id="quote-text"></div>
-    <p style="font-size:0.8rem; color:#aaa;">(잠시 후 사라집니다)</p>
+    <div id="quote-text" style="font-size: 1.5rem; color: var(--point); font-weight: 800;"></div>
+    <div style="margin-top:20px; color: var(--sub);">잠시 후 돌아갑니다</div>
 </div>
 
-<audio id="bgm" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3"></audio>
+<button class="bgm-btn" onclick="toggleBGM()">🎵</button>
+<audio id="bgm" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
 <script>
     let selectedEmotion = '😶';
@@ -78,53 +89,70 @@
     }
 
     function toggleBGM() {
-        const audio = document.getElementById('bgm');
-        audio.paused ? audio.play() : audio.pause();
+        const a = document.getElementById('bgm');
+        a.paused ? a.play() : a.pause();
     }
 
     async function fetchInfo() {
-        const res = await fetch('/info');
-        const data = await res.json();
-        document.getElementById('total-val').innerText = data.total;
-        const list = document.getElementById('history-list');
-        list.innerHTML = data.messages.map(msg => `
-            <div class="message-item">
-                <span style="font-size:1.2rem">${msg.emotion}</span> 
-                <span style="margin-left:5px;">${msg.content}</span>
-                <div style="font-size:0.7rem; color:#ccc; margin-top:5px;">${msg.date}</div>
-            </div>
-        `).join('');
+        try {
+            const res = await fetch('/info');
+            const data = await res.json();
+            document.getElementById('total-val').innerText = data.total;
+            const list = document.getElementById('history-list');
+            list.innerHTML = data.messages.map(msg => `
+                <div class="message-item">
+                    <span style="font-size:1.5rem">${msg.emotion}</span>
+                    <div>
+                        <div style="font-size:1rem; margin-bottom:5px;">${msg.content}</div>
+                        <div style="font-size:0.75rem; color:#ccc;">${msg.date}</div>
+                    </div>
+                </div>
+            `).join('');
+        } catch(e) { console.error("데이터 로드 실패"); }
     }
 
     async function processBurn() {
-        const contentArea = document.getElementById('content');
-        if (!contentArea.value.trim()) return;
+        const area = document.getElementById('content');
+        const btn = document.getElementById('burn-btn');
+        const text = area.value.trim();
 
-        const formData = new FormData();
-        formData.append('content', contentArea.value);
-        formData.append('emotion', selectedEmotion);
+        if (!text) return;
 
-        const res = await fetch('/burn', { method: 'POST', body: formData });
-        const data = await res.json();
+        btn.disabled = true;
+        btn.innerText = "비우는 중...";
 
-        if (data.status === 'success') {
-            contentArea.classList.add('burning');
-            setTimeout(async () => {
-                // 서버에서 삭제
-                await fetch(`/delete/${data.id}`, { method: 'DELETE' });
+        const fd = new FormData();
+        fd.append('content', text);
+        fd.append('emotion', selectedEmotion);
+
+        try {
+            const res = await fetch('/burn', { method: 'POST', body: fd });
+            const data = await res.json();
+
+            if (data.status === 'success') {
+                area.classList.add('burning');
                 
-                // 명언 팝업
-                const overlay = document.getElementById('quote-overlay');
-                document.getElementById('quote-text').innerText = data.quote;
-                overlay.style.display = 'flex';
-                
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    contentArea.value = "";
-                    contentArea.classList.remove('burning');
-                    fetchInfo();
-                }, 3000);
-            }, 1500);
+                setTimeout(async () => {
+                    await fetch(`/delete/${data.id}`, { method: 'DELETE' });
+                    
+                    const overlay = document.getElementById('quote-overlay');
+                    document.getElementById('quote-text').innerText = data.quote;
+                    overlay.style.display = 'flex';
+                    
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        area.value = "";
+                        area.classList.remove('burning');
+                        btn.disabled = false;
+                        btn.innerText = "비워내기";
+                        fetchInfo();
+                    }, 3000);
+                }, 1200);
+            }
+        } catch(e) {
+            alert("통신 중 오류가 발생했습니다.");
+            btn.disabled = false;
+            btn.innerText = "비워내기";
         }
     }
 </script>
