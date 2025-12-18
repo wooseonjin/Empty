@@ -12,7 +12,7 @@
             --accent: #e9967a;
         }
 
-        /* [핵심] 모든 숫자와 문자에 폰트 강제 고정 */
+        /* [핵심 1] 모든 텍스트와 숫자에 폰트 강제 적용 */
         * {
             font-family: 'Gowun Dodum', sans-serif !important;
             box-sizing: border-box; margin: 0; padding: 0;
@@ -23,18 +23,28 @@
             background-color: var(--soft-beige);
             color: #5d564e; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            padding: 20px 0; /* 전체적으로 위아래 여백 추가 */
+            padding: 30px 0; /* PC/모바일 상단 여백 */
         }
 
-        /* [상단 배너] 이미지처럼 양옆 여백을 주고 공중에 띄움 */
+        /* [핵심 2] 전체 컨테이너 가로폭 제한 (PC에서 너무 퍼지지 않게) */
+        .main-wrapper {
+            width: 92%;
+            max-width: 500px; /* PC에서도 모바일처럼 예쁜 폭 유지 */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* [상단 배너] 공중에 뜬 세련된 디자인 */
         .hero-section {
-            width: 92%; max-width: 500px; height: 200px;
+            width: 100%; height: 200px;
             background: linear-gradient(135deg, #a89685 0%, #8d7b68 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center;
-            border-radius: 30px; /* 사방을 둥글게 해서 공중에 뜬 느낌 */
+            border-radius: 35px;
             position: relative; 
-            box-shadow: 0 10px 20px rgba(141, 123, 104, 0.2);
+            box-shadow: 0 10px 25px rgba(141, 123, 104, 0.15);
         }
 
         .rank-tag {
@@ -46,56 +56,50 @@
         .main-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; }
         .sub-title { font-size: 0.8rem; letter-spacing: 8px; opacity: 0.8; }
 
-        /* [컨텐츠 영역] */
-        .content-wrapper {
-            width: 92%; max-width: 500px;
-            margin-top: 20px; /* 배너와 떨어뜨려 여유 있게 배치 */
-            display: flex; flex-direction: column; gap: 15px;
-        }
-
-        /* [정보 카드] 폰트 문제 해결 */
+        /* [정보 카드] 숫자 폰트 고정 */
         .info-card {
-            background: white; padding: 20px; border-radius: 25px;
+            width: 100%; background: white; padding: 22px; border-radius: 28px;
             display: flex; justify-content: space-around; align-items: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
         }
         .info-item { text-align: center; flex: 1; }
         .info-label { font-size: 0.8rem; color: #bcab9a; margin-bottom: 8px; }
         
-        /* 숫자 부분 폰트 강제 적용 */
+        /* 숫자에도 폰트가 잘 보이도록 강제 지정 */
         .info-value { 
             font-size: 1.5rem; font-weight: 700; color: var(--main-brown);
-            display: block; 
+            font-family: 'Gowun Dodum' !important;
         }
         .info-value span { color: var(--accent); font-family: 'Gowun Dodum' !important; }
 
-        .v-line { width: 1px; height: 30px; background: #eee; }
+        .v-line { width: 1px; height: 35px; background: #f0f0f0; }
 
-        .temp-bar-bg { width: 100%; height: 6px; background: #f0f0f0; border-radius: 10px; margin-top: 10px; overflow: hidden; }
+        .temp-bar-bg { width: 100%; height: 7px; background: #f2f2f2; border-radius: 10px; margin-top: 10px; overflow: hidden; }
         .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1.5s ease; }
 
         /* [입력 카드] */
         .input-card { 
-            background: white; padding: 25px; border-radius: 30px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            width: 100%; background: white; padding: 30px; border-radius: 35px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             display: flex; flex-direction: column; align-items: center;
         }
 
-        .emotion-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 12px; }
-        .emotion-btn { cursor: pointer; font-size: 2rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
-        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.15); }
+        .emotion-selector { margin-bottom: 25px; display: flex; justify-content: center; gap: 15px; }
+        .emotion-btn { cursor: pointer; font-size: 2.2rem; filter: grayscale(1); opacity: 0.2; transition: 0.3s; }
+        .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
 
         #content { 
-            width: 100%; height: 120px; border: none; background: transparent;
-            font-size: 1.1rem; outline: none; resize: none; text-align: center;
-            line-height: 1.6; color: #5d564e;
+            width: 100%; height: 140px; border: none; background: transparent;
+            font-size: 1.15rem; outline: none; resize: none; text-align: center;
+            line-height: 1.7; color: #5d564e;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: white; border: none; 
-            margin-top: 15px; padding: 14px 0; width: 100%; font-size: 1.3rem; font-weight: 700;
-            border-radius: 40px; cursor: pointer;
+            margin-top: 20px; padding: 15px 0; width: 100%; font-size: 1.4rem; font-weight: 700;
+            border-radius: 50px; cursor: pointer; transition: 0.2s;
         }
+        .btn-empty:active { transform: scale(0.98); opacity: 0.9; }
 
         .footer-cheer {
             margin-top: 10px; font-size: 0.85rem; color: #bcab9a; text-align: center;
@@ -104,13 +108,13 @@
 </head>
 <body>
 
-<div class="hero-section">
-    <div class="rank-tag">마음 레벨: <span id="rank-level">1단계</span></div>
-    <h1 class="main-title">흔적없는 고민 상담소</h1>
-    <div class="sub-title">EMPTY</div>
-</div>
+<div class="main-wrapper">
+    <div class="hero-section">
+        <div class="rank-tag">마음 레벨: <span id="rank-level">1단계</span></div>
+        <h1 class="main-title">흔적없는 고민 상담소</h1>
+        <div class="sub-title">EMPTY</div>
+    </div>
 
-<div class="content-wrapper">
     <div class="info-card">
         <div class="info-item">
             <div class="info-label">비워낸 마음</div>
@@ -132,43 +136,51 @@
             <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
             <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
         </div>
-        <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 적어보세요."></textarea>
+        <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 편하게 적어보세요..."></textarea>
         <button class="btn-empty" onclick="processBurn()">마음 비워내기</button>
     </div>
 
-    <div id="cheer-msg" class="footer-cheer">잠시 마음을 내려놓아도 괜찮아요.</div>
+    <div id="cheer-msg" class="footer-cheer">오늘 하루도 고생 많았어요.</div>
 </div>
 
 <script>
-    // ... 기존 스크립트와 동일 (생략)
     let selectedEmotion = '😶';
-    async function fetchInfo() {
-        const res = await fetch('/info');
-        const data = await res.json();
-        document.getElementById('total-val').innerText = data.total;
-        const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
-        document.getElementById('temp-text').innerText = tempVal;
-        document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
-        
-        let level = "1단계";
-        if(data.total > 100) level = "마스터";
-        else if(data.total > 50) level = "4단계";
-        else if(data.total > 20) level = "3단계";
-        else if(data.total > 5) level = "2단계";
-        document.getElementById('rank-level').innerText = level;
-    }
+
     window.onload = fetchInfo;
+
+    async function fetchInfo() {
+        try {
+            const res = await fetch('/info');
+            const data = await res.json();
+            document.getElementById('total-val').innerText = data.total;
+            
+            let level = "1단계";
+            if(data.total > 100) level = "마스터";
+            else if(data.total > 50) level = "4단계";
+            else if(data.total > 20) level = "3단계";
+            else if(data.total > 5) level = "2단계";
+            document.getElementById('rank-level').innerText = level;
+
+            const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
+            document.getElementById('temp-text').innerText = tempVal;
+            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
+        } catch(e) {}
+    }
+
     function selectEmotion(el, emo) {
         document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
         el.classList.add('active');
         selectedEmotion = emo;
     }
+
     async function processBurn() {
         const area = document.getElementById('content');
         if (!area.value.trim()) return;
-        const res = await fetch('/burn', { method: 'POST', body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) });
-        area.value = "";
-        fetchInfo();
+        try {
+            await fetch('/burn', { method: 'POST', body: new URLSearchParams({'content': area.value, 'emotion': selectedEmotion}) });
+            area.value = "";
+            fetchInfo();
+        } catch(e) {}
     }
 </script>
 </body>
