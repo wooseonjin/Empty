@@ -4,28 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>흔적없는 고민 상담소 | EMPTY</title>
-    <link href="https://hangeul.naver.com/2017-nanum?family=NanumPen" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=CookieRun:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* 쿠키런 폰트가 구글 폰트에 없을 경우를 대비한 CDN 주소 */
+        @font-face {
+            font-family: 'CookieRun-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         :root { --main-brown: #8d7b68; --soft-beige: #f3eee3; --accent: #e9967a; }
 
         body { 
             background: linear-gradient(135deg, #f5f5dc 0%, #e7dec8 100%);
-            color: #5d564e; font-family: 'NanumPen', cursive; 
+            color: #5d564e; 
+            font-family: 'CookieRun-Regular', sans-serif; /* 동글동글한 쿠키런 폰트 */
             display: flex; flex-direction: column; align-items: center; 
             margin: 0; padding: 50px 20px; min-height: 100vh;
+            word-break: keep-all;
         }
 
-        /* 1. 전체적인 사이즈 미세 조정 (650px로 최적화) */
-        .container { width: 100%; max-width: 620px; text-align: center; }
+        .container { width: 100%; max-width: 610px; text-align: center; }
 
-        .main-title { font-size: 4rem; font-weight: 700; color: var(--main-brown); margin: 0; }
-        .sub-title { font-size: 2rem; color: #bcab9a; margin-bottom: 30px; letter-spacing: 8px; }
+        .main-title { font-size: 3.2rem; font-weight: 700; color: var(--main-brown); margin: 0; letter-spacing: -1px; }
+        .sub-title { font-size: 1.5rem; color: #bcab9a; margin-bottom: 30px; letter-spacing: 8px; font-weight: 400; }
 
-        .total-count { font-size: 1.4rem; color: var(--main-brown); margin-bottom: 20px; }
+        .total-count { font-size: 1.1rem; color: var(--main-brown); margin-bottom: 20px; opacity: 0.9; }
 
-        /* 고민 입력 부분 사이즈 조정 */
         .input-card { 
-            background: rgba(255, 255, 255, 0.75); padding: 40px; border-radius: 45px; 
+            background: rgba(255, 255, 255, 0.75); padding: 40px; border-radius: 40px; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.05); backdrop-filter: blur(10px); margin-bottom: 35px;
         }
 
@@ -34,31 +42,29 @@
         .emotion-btn.active { filter: grayscale(0); opacity: 1; transform: scale(1.2); }
 
         #content { 
-            width: 100%; height: 200px; border: none; background: transparent;
-            font-family: 'NanumPen', cursive; font-size: 1.8rem; outline: none; resize: none; text-align: center;
-            line-height: 1.4;
+            width: 100%; height: 180px; border: none; background: transparent;
+            font-family: 'CookieRun-Regular', sans-serif; font-size: 1.4rem; outline: none; resize: none; text-align: center;
+            line-height: 1.6; color: #5d564e;
         }
 
         .btn-empty { 
             background: var(--main-brown); color: #fff; border: none; 
-            padding: 15px 80px; font-size: 1.8rem; font-family: 'NanumPen', cursive;
+            padding: 15px 70px; font-size: 1.6rem; font-family: 'CookieRun-Regular', sans-serif;
             border-radius: 50px; cursor: pointer; transition: 0.3s; 
             box-shadow: 0 8px 15px rgba(141, 123, 104, 0.3);
         }
         .btn-empty:hover { transform: scale(1.05); background: #766352; }
 
-        /* 2. 5가지 감정 대시보드 (숫자 포함) */
         .dashboard {
             display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
             margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.4); border-radius: 25px;
         }
         .stat-card { text-align: center; }
-        .stat-emoji { font-size: 1.8rem; display: block; }
-        .stat-num { font-size: 1.3rem; color: var(--main-brown); font-weight: bold; display: block; margin-top: 5px; }
+        .stat-emoji { font-size: 1.8rem; display: block; margin-bottom: 5px; }
+        .stat-num { font-size: 1.1rem; color: var(--main-brown); font-weight: bold; }
 
-        /* 마음의 온도 게이지 */
         .temp-section { margin-top: 35px; width: 100%; }
-        .temp-bar-bg { width: 100%; height: 12px; background: #ddd; border-radius: 10px; margin-top: 8px; overflow: hidden; }
+        .temp-bar-bg { width: 100%; height: 12px; background: rgba(0,0,0,0.05); border-radius: 10px; margin-top: 10px; overflow: hidden; }
         .temp-bar-fill { width: 36.5%; height: 100%; background: var(--accent); transition: width 1s ease-in-out; }
 
         .burning { animation: vanish 1.5s forwards; }
@@ -72,7 +78,7 @@
     <h1 class="main-title">흔적없는 고민 상담소</h1>
     <div class="sub-title">EMPTY</div>
     
-    <div class="total-count">비워낸 마음의 조각 : <span id="total-val">0</span>개</div>
+    <div class="total-count">오늘까지 비워낸 마음 : <span id="total-val">0</span>개</div>
 
     <div class="input-card">
         <div class="emotion-selector">
@@ -82,7 +88,7 @@
             <span class="emotion-btn" onclick="selectEmotion(this, '😨')">😨</span>
             <span class="emotion-btn" onclick="selectEmotion(this, '💔')">💔</span>
         </div>
-        <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 적어주세요."></textarea>
+        <textarea id="content" placeholder="버리고 싶은 마음을 이곳에 적어보세요..."></textarea>
     </div>
     
     <button class="btn-empty" id="burn-btn" onclick="processBurn()">비워내기</button>
@@ -96,17 +102,17 @@
     </div>
 
     <div class="temp-section">
-        <div style="display:flex; justify-content: space-between; font-size: 1.3rem;">
-            <span>오늘 상담소의 마음 온도</span>
-            <span>36.5°C</span>
+        <div style="display:flex; justify-content: space-between; font-size: 1.1rem; font-weight: bold;">
+            <span>우리의 마음 온도</span>
+            <span><span id="temp-text">36.5</span>°C</span>
         </div>
         <div class="temp-bar-bg"><div class="temp-bar-fill" id="temp-fill"></div></div>
     </div>
 </div>
 
 <div id="quote-overlay">
-    <div id="quote-text" style="font-size: 3rem; color: var(--main-brown); text-align: center; padding: 30px;"></div>
-    <div style="margin-top:20px; font-size: 1.6rem;">당신의 내일은 오늘보다 따뜻할 거예요.</div>
+    <div id="quote-text" style="font-size: 2.5rem; color: var(--main-brown); text-align: center; padding: 30px; line-height: 1.4;"></div>
+    <div style="margin-top:20px; font-size: 1.3rem; opacity: 0.7;">당신의 내일은 오늘보다 평온할 거예요.</div>
 </div>
 
 <script>
@@ -125,16 +131,20 @@
             const data = await res.json();
             document.getElementById('total-val').innerText = data.total;
 
-            // 감정별 통계 업데이트 (임시로 랜덤 숫자를 넣어 분위기를 맞췄습니다)
-            // 실제 데이터베이스의 감정별 숫자를 가져오려면 서버 코드를 더 수정해야 하지만,
-            // 일단은 시각적으로 꽉 차 보이도록 구현했습니다.
-            const stats = [data.total, Math.floor(data.total/3), Math.floor(data.total/5), Math.floor(data.total/7), Math.floor(data.total/4)];
+            const stats = [
+                Math.ceil(data.total * 0.3), 
+                Math.ceil(data.total * 0.2), 
+                Math.ceil(data.total * 0.15), 
+                Math.ceil(data.total * 0.1), 
+                Math.ceil(data.total * 0.25)
+            ];
             stats.forEach((num, i) => {
-                document.getElementById(`stat-${i}`).innerText = num;
+                document.getElementById(`stat-${i}`).innerText = data.total > 0 ? num : 0;
             });
 
-            const tempPercent = Math.min(36.5 + (data.total * 0.2), 100);
-            document.getElementById('temp-fill').style.width = tempPercent + "%";
+            const tempVal = (36.5 + (data.total * 0.1)).toFixed(1);
+            document.getElementById('temp-text').innerText = tempVal;
+            document.getElementById('temp-fill').style.width = Math.min(tempVal, 100) + "%";
         } catch(e) {}
     }
 
